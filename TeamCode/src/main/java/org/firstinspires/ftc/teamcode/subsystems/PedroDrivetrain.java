@@ -4,6 +4,8 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 
@@ -54,5 +56,13 @@ public class PedroDrivetrain extends SubsystemBase {
 
     public RunCommand driveFollowerCommand() {
         return new RunCommand(this::driveFollower, this);
+    }
+
+    public Command setSlowModeCommand() {
+        return new InstantCommand(() -> speedModifier = SLOW_SPEED, this);
+    }
+
+    public Command setFastModeCommand() {
+        return new InstantCommand(() -> speedModifier = FAST_SPEED, this);
     }
 }
