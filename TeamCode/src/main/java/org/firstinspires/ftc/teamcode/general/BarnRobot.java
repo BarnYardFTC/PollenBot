@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.general;
+package org.firstinspires.ftc.teamcode.util;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
@@ -14,8 +14,6 @@ public class BarnRobot {
     public Telemetry telemetry;
 
     public GamepadEx gamepadEx1;
-
-    public OpmodeData opmodeData;
 
     public Hardware hardware;
 
@@ -33,7 +31,7 @@ public class BarnRobot {
         return instance;
     }
 
-    public void init(OpMode opMode, OpmodeData opmodeData){
+    public void init(OpMode opMode){
         hardware = new Hardware(opMode.hardwareMap);
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
         drive = new PedroDrivetrain(opMode);
