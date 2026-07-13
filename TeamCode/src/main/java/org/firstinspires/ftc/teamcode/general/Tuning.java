@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.util;
+package org.firstinspires.ftc.teamcode.general;
 
 import static com.pedropathing.math.MathFunctions.quadraticFit;
 
