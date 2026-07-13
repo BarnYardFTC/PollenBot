@@ -9,13 +9,13 @@ import org.firstinspires.ftc.teamcode.general.BarnRobot;
 
 public class TeleopTemplate {
     private final BarnRobot robot = BarnRobot.getInstance();
-    public TeleopTemplate(OpMode opMode, OpmodeData opmodeData) {
-        init(opMode, opmodeData);
+    public TeleopTemplate(OpMode opMode) {
+        init(opMode);
     }
 
-    private void init(OpMode opMode, OpmodeData opmodeData) {
+    private void init(OpMode opMode) {
         PhotonCore.enable();
-        robot.init(opMode, opmodeData);
+        robot.init(opMode);
         //TODO: figure out the proper way of setting follower's starting position using OpmodeData
         robot.drive.follower.startTeleopDrive();
         robot.hardware.setBrake();
