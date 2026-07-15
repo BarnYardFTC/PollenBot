@@ -4,16 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.photon.PhotonCore;
 
-import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 
 public class TeleopTemplate {
-    private final BarnRobot robot = BarnRobot.getInstance();
-    public TeleopTemplate(OpMode opMode) {
-        init(opMode);
-    }
-
-    private void init(OpMode opMode) {
+    private static final BarnRobot robot = BarnRobot.getInstance();
+    public static void apply(OpMode opMode) {
         PhotonCore.enable();
         robot.init(opMode);
         //TODO: figure out the proper way of setting follower's starting position using OpmodeData

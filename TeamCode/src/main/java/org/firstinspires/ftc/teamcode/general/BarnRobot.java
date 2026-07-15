@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.general.Hardware;
-import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
 import org.firstinspires.ftc.teamcode.subsystems.PedroDrivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Pinpoint;
 
