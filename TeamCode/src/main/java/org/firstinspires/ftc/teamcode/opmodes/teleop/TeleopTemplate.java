@@ -9,8 +9,6 @@ import org.firstinspires.ftc.teamcode.general.BarnRobot;
 
 public class TeleopTemplate {
     private final BarnRobot robot = BarnRobot.getInstance();
-
-    private final boolean BRAKE_MODE = true; //will stop robot after realising joistics (requires testing)
     public TeleopTemplate(OpMode opMode) {
         init(opMode);
     }
@@ -19,8 +17,8 @@ public class TeleopTemplate {
         PhotonCore.enable();
         robot.init(opMode);
         //TODO: figure out the proper way of setting follower's starting position using OpmodeData
-        robot.drive.follower.startTeleopDrive(BRAKE_MODE);
-//        robot.hardware.setBrake();
+        robot.drive.follower.startTeleopDrive();
+        robot.hardware.setBrake();
 
         robot.drive.setDefaultCommand(robot.drive.driveFollowerCommand());
 
