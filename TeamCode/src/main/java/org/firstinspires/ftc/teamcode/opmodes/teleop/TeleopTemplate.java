@@ -7,6 +7,7 @@ import com.seattlesolvers.solverslib.photon.PhotonCore;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
 
@@ -15,9 +16,10 @@ public class TeleopTemplate {
     public static void apply(OpMode opMode) {
         PhotonCore.enable();
         robot.init(opMode);
-        robot.pinpoint.setPosition();
-        robot.drive.follower.setStartingPose(OpmodeData.initialPose);
+        OpmodeData.initialPose2D = new Pose2D(DistanceUnit.INCH, 50, 50, AngleUnit.DEGREES, 0);
+        robot.drive.follower.setStartingPose(new Pose(OpmodeData.initialPose2D.getX(DistanceUnit.INCH), OpmodeData.initialPose2D.getY(DistanceUnit.INCH), OpmodeData.initialPose2D.getHeading(AngleUnit.RADIANS)));
         robot.drive.follower.startTeleopDrive(true);
+        robot.pinpoint.setPosition();
 
         robot.drive.setDefaultCommand(robot.drive.driveFollowerCommand());
 

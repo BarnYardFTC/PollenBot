@@ -10,12 +10,10 @@ public class Pinpoint {
     private final GoBildaPinpointDriver pinpoint;
     public Pinpoint() {
         pinpoint = BarnRobot.getInstance().hardware.pinpoint;
-        pinpoint.resetPosAndIMU();
     }
 
     public void update(){
         pinpoint.update();
-        OpmodeData.initialPose2D = pinpoint.getPosition();
     }
 
     public void setPosition(){

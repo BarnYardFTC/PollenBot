@@ -9,16 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 public class OpmodeData {
     public enum AllianceColor { RED, BLUE }
     public static AllianceColor color;
-    public static Pose2D initialPose2D = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
-    public static Pose initialPose = new Pose(initialPose2D.getX(DistanceUnit.INCH), initialPose2D.getY(DistanceUnit.INCH), initialPose2D.getHeading(AngleUnit.RADIANS));
-    public static Pose2D currentPose = initialPose2D;
-    public static void init(AllianceColor alColor, Pose2D initPose){
-        color = alColor;
-        initialPose2D = initPose;
-    }
-
-    public static Pose2D simple2D(double x, double y, double turn) {
-        return new Pose2D(DistanceUnit.INCH, x, y, AngleUnit.DEGREES, turn);
-    }
+    public static Pose2D initialPose2D;
+    //public static Pose initialPose = new Pose(initialPose2D.getX(DistanceUnit.INCH), initialPose2D.getY(DistanceUnit.INCH), initialPose2D.getHeading(AngleUnit.RADIANS));
 
 }
