@@ -22,7 +22,7 @@ public class PedroDrivetrain extends SubsystemBase {
 
     private double speedModifier = FAST_SPEED;
 
-    private static final double SLOW_SPEED = 0.5;
+    private static final double SLOW_SPEED = 0.3;
     private static final double FAST_SPEED = 1.0;
 
     public PedroDrivetrain(OpMode opMode) {
@@ -49,7 +49,7 @@ public class PedroDrivetrain extends SubsystemBase {
         follower.setTeleOpDrive(
                 BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier,
                 -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier,
-                -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier,
+                -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7,
                 false
         );
     }
