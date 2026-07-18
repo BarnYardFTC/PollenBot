@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -8,9 +11,12 @@ import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 import org.firstinspires.ftc.teamcode.general.Constants;
+
+import java.util.Objects;
 
 public class PedroDrivetrain extends SubsystemBase {
     private DcMotor leftFront;
@@ -45,7 +51,6 @@ public class PedroDrivetrain extends SubsystemBase {
     }
 
     private void driveFollower() {
-        follower.update();
         follower.setTeleOpDrive(
                 BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier,
                 -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier,
@@ -54,7 +59,14 @@ public class PedroDrivetrain extends SubsystemBase {
         );
     }
 
+    private void reset() {
+        if (follower.isBusy()) {
+            follower.breakFollowing();
+        }
+    }
+
     public RunCommand driveFollowerCommand() {
+        reset();
         return new RunCommand(this::driveFollower, this);
     }
 
@@ -64,5 +76,35 @@ public class PedroDrivetrain extends SubsystemBase {
 
     public Command setFastModeCommand() {
         return new InstantCommand(() -> speedModifier = FAST_SPEED, this);
+    }
+
+    private void alignTo(Pose pose) {
+        Pose currentPose = follower.getPose();
+        double targetHeading = Math.atan2(
+                pose.getY() - currentPose.getY(),
+                pose.getX() - currentPose.getX()
+        );
+        follower.holdPoint(new Pose(currentPose.getX(), currentPose.getY(), targetHeading));
+    }
+
+    public Command goTo(Pose pose) {
+        reset();
+        return new FollowPathCommand(
+                follower,
+                follower.pathBuilder()
+                        .addPath(new BezierLine(follower.getPose(), pose))
+                        .setLinearHeadingInterpolation(follower.getHeading(), pose.getHeading())
+                        .build()
+        );
+    }
+
+    public Command hold() {
+        reset();
+        return new InstantCommand(() -> follower.holdPoint(follower.getPose()), this);
+    }
+
+    public Command face(Pose targetPose) {
+        reset();
+        return new InstantCommand(() ->alignTo(targetPose), this);
     }
 }

@@ -41,5 +41,6 @@ public class BarnRobot {
     public void periodic() {
         telemetry.update();
         pinpoint.update();
+        drive.follower.update();
     }
 }
