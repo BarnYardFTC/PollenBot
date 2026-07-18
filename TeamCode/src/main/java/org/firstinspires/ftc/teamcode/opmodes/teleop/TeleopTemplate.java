@@ -18,7 +18,6 @@ public class TeleopTemplate {
         robot.init(opMode);
         OpmodeData.initialPose2D = new Pose2D(DistanceUnit.INCH, 50, 50, AngleUnit.DEGREES, 0);
         robot.drive.follower.setStartingPose(new Pose(OpmodeData.initialPose2D.getX(DistanceUnit.INCH), OpmodeData.initialPose2D.getY(DistanceUnit.INCH), OpmodeData.initialPose2D.getHeading(AngleUnit.RADIANS)));
-        robot.drive.follower.startTeleopDrive(true);
         robot.pinpoint.setPosition();
 
         robot.drive.setDefaultCommand(robot.drive.driveFollowerCommand());
@@ -28,5 +27,14 @@ public class TeleopTemplate {
                         robot.drive.setSlowModeCommand(),
                         robot.drive.setFastModeCommand()
                 );
+
+        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
+                .whenActive(robot.drive.faceCommand(robot.drive.follower.getPose()));
+
+        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
+                .whenActive(robot.drive.holdCommand());
+
+        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
+                .whenActive(robot.drive.goToCommand(new Pose(72, 72, 0)));
     }
 }
