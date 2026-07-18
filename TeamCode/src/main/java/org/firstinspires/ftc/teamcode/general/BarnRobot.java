@@ -31,7 +31,9 @@ public class BarnRobot {
     }
 
     public boolean sticksUsed() {
-        return gamepadEx1.getLeftX() != 0 || gamepadEx1.getLeftY() != 0 || gamepadEx1.getRightX() != 0;
+        return Math.abs(gamepadEx1.getLeftX()) > 0.05
+                || Math.abs(gamepadEx1.getLeftY()) > 0.05
+                || Math.abs(gamepadEx1.getRightX()) > 0.05;
     }
 
     public void init(OpMode opMode){

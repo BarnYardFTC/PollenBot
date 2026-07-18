@@ -28,6 +28,9 @@ public class PedroDrivetrain extends SubsystemBase {
     private final double SLOW_SPEED = 0.3;
     private final double FAST_SPEED = 1.0;
 
+    private Pose trackingPose = null;
+
+
     public PedroDrivetrain(OpMode opMode) {
         speedModifier = FAST_SPEED;
         leftFront = BarnRobot.getInstance().hardware.leftFrontDrivetrain;
@@ -49,13 +52,33 @@ public class PedroDrivetrain extends SubsystemBase {
     }
 
     private void driveFollower() {
+        double stickTurn = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7;
+        double turn = stickTurn;
+
+        if (trackingPose != null) {
+            Pose currentPose = follower.getPose();
+
+            double targetHeading = Math.atan2(
+                    trackingPose.getY() - currentPose.getY(),
+                    trackingPose.getX() - currentPose.getX()
+            );
+
+            double headingError = targetHeading - currentPose.getHeading();
+
+            while (headingError > Math.PI) headingError -= 2 * Math.PI;
+            while (headingError < -Math.PI) headingError += 2 * Math.PI;
+
+            turn = headingError * 2.0;
+        }
+
         if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
             follower.startTeleopDrive(true);
         }
+
         follower.setTeleOpDrive(
                 BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier,
                 -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier,
-                -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7,
+                turn,
                 false
         );
     }
@@ -97,5 +120,13 @@ public class PedroDrivetrain extends SubsystemBase {
 
     public Command faceCommand(Pose targetPose) {
         return new InstantCommand(() -> face(targetPose), this);
+    }
+
+    public Command setTrackingPoseCommand(Pose pose) {
+        return new InstantCommand(() -> trackingPose = pose, this);
+    }
+
+    public Command clearTrackingPoseCommand() {
+        return new InstantCommand(() -> trackingPose = null, this);
     }
 }
