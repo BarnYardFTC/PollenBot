@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -16,8 +15,6 @@ import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 import org.firstinspires.ftc.teamcode.general.Constants;
 
-import java.util.Objects;
-
 public class PedroDrivetrain extends SubsystemBase {
     private DcMotor leftFront;
     private DcMotor rightFront;
@@ -26,12 +23,13 @@ public class PedroDrivetrain extends SubsystemBase {
 
     public Follower follower;
 
-    private double speedModifier = FAST_SPEED;
+    private double speedModifier;
 
-    private static final double SLOW_SPEED = 0.3;
-    private static final double FAST_SPEED = 1.0;
+    private final double SLOW_SPEED = 0.3;
+    private final double FAST_SPEED = 1.0;
 
     public PedroDrivetrain(OpMode opMode) {
+        speedModifier = FAST_SPEED;
         leftFront = BarnRobot.getInstance().hardware.leftFrontDrivetrain;
         rightFront = BarnRobot.getInstance().hardware.rightFrontDrivetrain;
         leftBack = BarnRobot.getInstance().hardware.leftBackDrivetrain;
@@ -51,6 +49,9 @@ public class PedroDrivetrain extends SubsystemBase {
     }
 
     private void driveFollower() {
+        if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
+            follower.startTeleopDrive(true);
+        }
         follower.setTeleOpDrive(
                 BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier,
                 -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier,
@@ -59,14 +60,16 @@ public class PedroDrivetrain extends SubsystemBase {
         );
     }
 
-    private void reset() {
-        if (follower.isBusy()) {
-            follower.breakFollowing();
-        }
+    private void face(Pose pose) {
+        Pose currentPose = follower.getPose();
+        double targetHeading = Math.atan2(
+                pose.getY() - currentPose.getY(),
+                pose.getX() - currentPose.getX()
+        );
+        follower.holdPoint(new Pose(currentPose.getX(), currentPose.getY(), targetHeading));
     }
 
     public RunCommand driveFollowerCommand() {
-        reset();
         return new RunCommand(this::driveFollower, this);
     }
 
@@ -78,17 +81,7 @@ public class PedroDrivetrain extends SubsystemBase {
         return new InstantCommand(() -> speedModifier = FAST_SPEED, this);
     }
 
-    private void alignTo(Pose pose) {
-        Pose currentPose = follower.getPose();
-        double targetHeading = Math.atan2(
-                pose.getY() - currentPose.getY(),
-                pose.getX() - currentPose.getX()
-        );
-        follower.holdPoint(new Pose(currentPose.getX(), currentPose.getY(), targetHeading));
-    }
-
-    public Command goTo(Pose pose) {
-        reset();
+    public Command goToCommand(Pose pose) {
         return new FollowPathCommand(
                 follower,
                 follower.pathBuilder()
@@ -98,13 +91,11 @@ public class PedroDrivetrain extends SubsystemBase {
         );
     }
 
-    public Command hold() {
-        reset();
+    public Command holdCommand() {
         return new InstantCommand(() -> follower.holdPoint(follower.getPose()), this);
     }
 
-    public Command face(Pose targetPose) {
-        reset();
-        return new InstantCommand(() ->alignTo(targetPose), this);
+    public Command faceCommand(Pose targetPose) {
+        return new InstantCommand(() -> face(targetPose), this);
     }
 }

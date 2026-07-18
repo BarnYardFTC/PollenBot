@@ -30,6 +30,10 @@ public class BarnRobot {
         return instance;
     }
 
+    public boolean sticksUsed() {
+        return gamepadEx1.getLeftX() != 0 || gamepadEx1.getLeftY() != 0 || gamepadEx1.getRightX() != 0;
+    }
+
     public void init(OpMode opMode){
         hardware = new Hardware(opMode.hardwareMap);
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
