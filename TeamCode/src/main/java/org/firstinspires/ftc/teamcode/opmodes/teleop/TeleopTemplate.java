@@ -29,7 +29,10 @@ public class TeleopTemplate {
                 );
 
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-                .whenActive(robot.drive.faceCommand(robot.drive.follower.getPose()));
+                .toggleWhenActive(
+                        robot.drive.setTrackingPoseCommand(robot.drive.follower.getPose()),
+                        robot.drive.clearTrackingPoseCommand()
+                );
 
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
                 .whenActive(robot.drive.holdCommand());
