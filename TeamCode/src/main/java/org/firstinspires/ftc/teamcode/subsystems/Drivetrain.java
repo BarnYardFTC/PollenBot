@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.control.PIDFController;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
@@ -32,6 +33,7 @@ public class Drivetrain extends SubsystemBase {
 
     private Pose trackingPose = null;
     private PIDFController trackingPIDF;
+    private PIDFController secondaryTrackingPIDF;
 
 
     public Drivetrain(OpMode opMode) {
@@ -46,6 +48,7 @@ public class Drivetrain extends SubsystemBase {
         initMotor(DcMotorSimple.Direction.FORWARD, rightBack);
         follower = Constants.createFollower(opMode.hardwareMap);
         trackingPIDF = new PIDFController(Constants.followerConstants.coefficientsHeadingPIDF);
+        secondaryTrackingPIDF = new PIDFController(Constants.followerConstants.coefficientsSecondaryHeadingPIDF);
     }
 
     private void initMotor(DcMotorSimple.Direction direction, DcMotor motor) {
@@ -71,19 +74,33 @@ public class Drivetrain extends SubsystemBase {
 
             double headingError = MathFunctions.normalizeAngleSigned(targetAngle - currentPose.getHeading());
 
-            trackingPIDF.updateError(headingError);
-            trackingPIDF.updateFeedForwardInput(MathFunctions.getTurnDirection(currentPose.getHeading(), targetAngle));
-            turn = trackingPIDF.run();
+            follower.setHeadingPIDFCoefficients(new PIDFCoefficients(0, 0, 0, 0));
+
+            if (Math.abs(headingError) < Constants.followerConstants.headingPIDFSwitch && Constants.followerConstants.useSecondaryHeadingPIDF) {
+                secondaryTrackingPIDF.updateError(headingError);
+                secondaryTrackingPIDF.updateFeedForwardInput(MathFunctions.getTurnDirection(currentPose.getHeading(), targetAngle));
+                turn = secondaryTrackingPIDF.run();
+            } else {
+                trackingPIDF.updateError(headingError);
+                trackingPIDF.updateFeedForwardInput(MathFunctions.getTurnDirection(currentPose.getHeading(), targetAngle));
+                turn = trackingPIDF.run();
+            }
         } else {
-            if (trackingPose != null) trackingPose = null;
+            if (trackingPose != null) {
+                trackingPose = null;
+                follower.setHeadingPIDFCoefficients(Constants.followerConstants.coefficientsHeadingPIDF);
+            }
             turn = stickTurn;
         }
 
         if (!follower.getTeleopDrive() && (BarnRobot.getInstance().sticksUsed() || trackingPose != null)) {
             follower.startTeleopDrive(true);
         }
-
-        follower.setTeleOpDrive(x, y, turn, false);
+        try {
+            follower.setTeleOpDrive(x, y, turn, false);
+        } catch (Exception e) {
+            BarnRobot.getInstance().telemetry.addData("failed to set teleop", e);
+        }
     }
 
     private void face(Pose pose) {

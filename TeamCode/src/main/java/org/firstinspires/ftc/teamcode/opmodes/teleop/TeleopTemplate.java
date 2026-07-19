@@ -28,14 +28,14 @@ public class TeleopTemplate {
                         robot.drive.setFastModeCommand()
                 );
 
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-//                .toggleWhenActive(
-//                        robot.drive.setTrackingPoseCommand(robot.drive.follower.getPose()),
-//                        robot.drive.clearTrackingPoseCommand()
-//                );
-
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-                        .whenActive(robot.drive.faceCommand(OpmodeData.initialPose));
+                .toggleWhenActive(
+                        robot.drive.setTrackingPoseCommand(robot.drive.follower.getPose()),
+                        robot.drive.clearTrackingPoseCommand()
+                );
+
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
+//                        .whenActive(robot.drive.faceCommand(OpmodeData.initialPose));
 
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
                 .whenActive(robot.drive.holdCommand());
