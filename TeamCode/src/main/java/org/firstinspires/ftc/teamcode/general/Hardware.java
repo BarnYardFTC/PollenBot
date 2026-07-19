@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.general;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -15,6 +16,10 @@ public class Hardware {
     public static final String RIGHT_BACK_DRIVETRAIN_CONFIG_NAME = "rightBackDrivetrain";
 
     private static final String PINPOINT_CONFIG_NAME = "pinpoint";
+
+    public static final String LIMLIGHT_CONFIG_NAME = "limelight";
+
+    public Limelight3A limelight;
 
     public GoBildaPinpointDriver pinpoint;
 
@@ -38,5 +43,6 @@ public class Hardware {
 
     private void initSensors(){
         pinpoint = hwMap.get(GoBildaPinpointDriver.class, PINPOINT_CONFIG_NAME);
+        limelight = hwMap.get(Limelight3A.class, LIMLIGHT_CONFIG_NAME);
     }
 }
