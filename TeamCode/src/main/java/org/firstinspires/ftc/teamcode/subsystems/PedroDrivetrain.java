@@ -74,13 +74,16 @@ public class PedroDrivetrain extends SubsystemBase {
         if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
             follower.startTeleopDrive(true);
         }
-
-        follower.setTeleOpDrive(
-                BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier,
-                -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier,
-                turn,
-                false
-        );
+        try {
+            follower.setTeleOpDrive(
+                    BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier,
+                    -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier,
+                    turn,
+                    false
+            );
+        } catch (Exception e) {
+            BarnRobot.getInstance().telemetry.addData("failed to set teleop drive", e);
+        }
     }
 
     private void face(Pose pose) {
@@ -90,6 +93,10 @@ public class PedroDrivetrain extends SubsystemBase {
                 pose.getX() - currentPose.getX()
         );
         follower.holdPoint(new Pose(currentPose.getX(), currentPose.getY(), targetHeading));
+    }
+
+    public boolean isTracking() {
+        return trackingPose != null || follower.isBusy() && !follower.getTeleopDrive();
     }
 
     public RunCommand driveFollowerCommand() {
