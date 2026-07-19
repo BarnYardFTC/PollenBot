@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.subsystems.PedroDrivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Pinpoint;
 
 public class BarnRobot {
@@ -16,7 +16,7 @@ public class BarnRobot {
 
     public Hardware hardware;
 
-    public PedroDrivetrain drive;
+    public Drivetrain drive;
 
     public Pinpoint pinpoint;
 
@@ -39,7 +39,7 @@ public class BarnRobot {
     public void init(OpMode opMode){
         hardware = new Hardware(opMode.hardwareMap);
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
-        drive = new PedroDrivetrain(opMode);
+        drive = new Drivetrain(opMode);
         pinpoint = new Pinpoint();
         telemetry = opMode.telemetry;
     }
