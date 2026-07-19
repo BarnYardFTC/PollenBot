@@ -16,10 +16,6 @@ public class Pinpoint {
         pinpoint.update();
     }
 
-    public void setPosition(){
-        pinpoint.setPosition(OpmodeData.initialPose2D);
-    }
-
     public GoBildaPinpointDriver get() {
         return pinpoint;
     }

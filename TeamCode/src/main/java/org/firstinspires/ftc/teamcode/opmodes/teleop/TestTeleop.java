@@ -31,10 +31,12 @@ public class TestTeleop extends CommandOpMode {
         robot.telemetry.addData("im pixdor", OpmodeData.initialPose2D.getX(DistanceUnit.INCH));
         robot.telemetry.addData("im piydor", OpmodeData.initialPose2D.getY(DistanceUnit.INCH));
         robot.telemetry.addData("im pddor", OpmodeData.initialPose2D.getHeading(AngleUnit.DEGREES));
+
+        robot.telemetry.addData("chatgpt am i swag? ", robot.drive.isTracking());
     }
 
     @Override
     public void end() {
-        //Peter this is for you, you said u wanted
+        OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
     }
 }
