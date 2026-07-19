@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.pedropathing.control.PIDFController;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
+import com.pedropathing.math.MathFunctions;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -15,7 +17,7 @@ import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 import org.firstinspires.ftc.teamcode.general.Constants;
 
-public class PedroDrivetrain extends SubsystemBase {
+public class Drivetrain extends SubsystemBase {
     private DcMotor leftFront;
     private DcMotor rightFront;
     private DcMotor leftBack;
@@ -29,9 +31,10 @@ public class PedroDrivetrain extends SubsystemBase {
     private final double FAST_SPEED = 1.0;
 
     private Pose trackingPose = null;
+    private PIDFController trackingPIDF;
 
 
-    public PedroDrivetrain(OpMode opMode) {
+    public Drivetrain(OpMode opMode) {
         speedModifier = FAST_SPEED;
         leftFront = BarnRobot.getInstance().hardware.leftFrontDrivetrain;
         rightFront = BarnRobot.getInstance().hardware.rightFrontDrivetrain;
@@ -42,6 +45,7 @@ public class PedroDrivetrain extends SubsystemBase {
         initMotor(DcMotorSimple.Direction.REVERSE, leftBack);
         initMotor(DcMotorSimple.Direction.FORWARD, rightBack);
         follower = Constants.createFollower(opMode.hardwareMap);
+        trackingPIDF = new PIDFController(Constants.followerConstants.coefficientsHeadingPIDF);
     }
 
     private void initMotor(DcMotorSimple.Direction direction, DcMotor motor) {
@@ -52,35 +56,34 @@ public class PedroDrivetrain extends SubsystemBase {
     }
 
     private void driveFollower() {
+        double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
+        double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
+
+        double turn;
         double stickTurn = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7;
-        double turn = stickTurn;
 
-        if (trackingPose != null) {
+        if (trackingPose != null && Math.abs(stickTurn) < 0.1) {
             Pose currentPose = follower.getPose();
-
-            double targetHeading = Math.atan2(
+            double targetAngle = Math.atan2(
                     trackingPose.getY() - currentPose.getY(),
                     trackingPose.getX() - currentPose.getX()
             );
 
-            double headingError = targetHeading - currentPose.getHeading();
+            double headingError = MathFunctions.normalizeAngleSigned(targetAngle - currentPose.getHeading());
 
-            while (headingError > Math.PI) headingError -= 2 * Math.PI;
-            while (headingError < -Math.PI) headingError += 2 * Math.PI;
-
-            turn = headingError * 2.0;
+            trackingPIDF.updateError(headingError);
+            trackingPIDF.updateFeedForwardInput(MathFunctions.getTurnDirection(currentPose.getHeading(), targetAngle));
+            turn = trackingPIDF.run();
+        } else {
+            if (trackingPose != null) trackingPose = null;
+            turn = stickTurn;
         }
 
-        if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
+        if (!follower.getTeleopDrive() && (BarnRobot.getInstance().sticksUsed() || trackingPose != null)) {
             follower.startTeleopDrive(true);
         }
 
-        follower.setTeleOpDrive(
-                BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier,
-                -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier,
-                turn,
-                false
-        );
+        follower.setTeleOpDrive(x, y, turn, false);
     }
 
     private void face(Pose pose) {
