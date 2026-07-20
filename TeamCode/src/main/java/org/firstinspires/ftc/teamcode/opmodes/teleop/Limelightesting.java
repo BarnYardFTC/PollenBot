@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
 
-@TeleOp(name = "Test Teleop", group = "test")
+@TeleOp(name = "Limelight Test Teleop", group = "test")
 public class Limelightesting extends CommandOpMode {
 
     private final BarnRobot robot = BarnRobot.getInstance();
