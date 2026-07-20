@@ -17,7 +17,7 @@ public class Hardware {
 
     private static final String PINPOINT_CONFIG_NAME = "pinpoint";
 
-    public static final String LIMLIGHT_CONFIG_NAME = "limelight";
+    public static final String LIMELIGHT_CONFIG_NAME = "limelight";
 
     public Limelight3A limelight;
 
@@ -43,6 +43,6 @@ public class Hardware {
 
     private void initSensors(){
         pinpoint = hwMap.get(GoBildaPinpointDriver.class, PINPOINT_CONFIG_NAME);
-        limelight = hwMap.get(Limelight3A.class, LIMLIGHT_CONFIG_NAME);
+        limelight = hwMap.get(Limelight3A.class, LIMELIGHT_CONFIG_NAME);
     }
 }
