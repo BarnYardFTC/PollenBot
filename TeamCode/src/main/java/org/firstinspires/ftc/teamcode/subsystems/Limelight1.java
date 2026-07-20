@@ -1,17 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 
-public class Limelight {
+public class Limelight1 {
     private final Limelight3A limelight;
     private LLResult latestResult;
 
-    public Limelight() {
-        limelight = BarnRobot.getInstance().hardware.limelight;
+    public Limelight1() {
+        limelight = BarnRobot.getInstance().hardware.limelight.get();
     }
 
     public void start() {

@@ -6,6 +6,8 @@ import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.subsystems.Limelight1;
+
 public class Hardware {
 
     private HardwareMap hwMap = hardwareMap;
@@ -19,7 +21,7 @@ public class Hardware {
 
     public static final String LIMELIGHT_CONFIG_NAME = "limelight";
 
-    public Limelight3A limelight;
+    public Limelight1 limelight;
 
     public GoBildaPinpointDriver pinpoint;
 
