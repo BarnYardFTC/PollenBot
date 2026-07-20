@@ -25,14 +25,6 @@ public class Limelightesting extends CommandOpMode {
         super.run();
         robot.periodic();
         robot.hardware.limelight.update();
-
-        robot.telemetry.addData("im gay", robot.pinpoint.get().getPosition().getX(DistanceUnit.INCH));
-        robot.telemetry.addData("im lesbian", robot.pinpoint.get().getPosition().getY(DistanceUnit.INCH));
-        robot.telemetry.addData("im transformer", robot.pinpoint.get().getPosition().getHeading(AngleUnit.DEGREES));
-        robot.telemetry.addData("im pixdor", OpmodeData.initialPose2D.getX(DistanceUnit.INCH));
-        robot.telemetry.addData("im piydor", OpmodeData.initialPose2D.getY(DistanceUnit.INCH));
-        robot.telemetry.addData("im pddor", OpmodeData.initialPose2D.getHeading(AngleUnit.DEGREES));
-
         robot.telemetry.addData("limelight has target", robot.hardware.limelight.hasValidTarget());
         robot.telemetry.addData("limelight tx", robot.hardware.limelight.getTx());
         robot.telemetry.addData("limelight ty", robot.hardware.limelight.getTy());
