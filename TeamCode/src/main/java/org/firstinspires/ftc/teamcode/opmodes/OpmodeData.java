@@ -13,9 +13,7 @@ public class OpmodeData {
     public static Pose2D initialPose2D;
     public static Pose initialPose = new Pose(pose2DSetter.getX(DistanceUnit.INCH), pose2DSetter.getY(DistanceUnit.INCH), pose2DSetter.getHeading(AngleUnit.RADIANS));
 
-    public static void setInitialPose2D(){
-        if(initialPose2D == null){
-            initialPose2D = pose2DSetter;
-        }
+    public static void updatePose(Pose2D pose2D){
+        initialPose2D = pose2D;
     }
 }
