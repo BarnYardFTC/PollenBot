@@ -16,20 +16,20 @@ public class Limelightesting extends CommandOpMode {
     @Override
     public void initialize() {
         TeleopTemplate.apply(this);
-        robot.hardware.limelight.start();
-        robot.hardware.limelight.pipelineSwitch(0);
+        robot.limelight.get().start();
+        robot.limelight.get().pipelineSwitch(0);
     }
 
     @Override
     public void run() {
         super.run();
         robot.periodic();
-        robot.hardware.limelight.update();
-        robot.telemetry.addData("limelight has target", robot.hardware.limelight.hasValidTarget());
-        robot.telemetry.addData("limelight tx", robot.hardware.limelight.getTx());
-        robot.telemetry.addData("limelight ty", robot.hardware.limelight.getTy());
-        robot.telemetry.addData("limelight ta", robot.hardware.limelight.getTa());
-        robot.telemetry.addData("limelight botpose", robot.hardware.limelight.getBotpose());
+        robot.limelight.update();
+        robot.telemetry.addData("limelight has target", robot.limelight.hasValidTarget());
+        robot.telemetry.addData("limelight tx", robot.limelight.getTx());
+        robot.telemetry.addData("limelight ty", robot.limelight.getTy());
+        robot.telemetry.addData("limelight ta", robot.limelight.getTa());
+        robot.telemetry.addData("limelight botpose", robot.limelight.getBotpose());
     }
 
     @Override

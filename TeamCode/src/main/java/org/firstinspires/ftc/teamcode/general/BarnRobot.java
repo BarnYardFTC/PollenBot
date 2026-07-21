@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.general;
 
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Limelight;
 import org.firstinspires.ftc.teamcode.subsystems.Pinpoint;
 
 public class BarnRobot {
@@ -19,6 +21,8 @@ public class BarnRobot {
     public Drivetrain drive;
 
     public Pinpoint pinpoint;
+
+    public Limelight limelight;
 
     public static boolean isRobotInitialized = false;
 
@@ -41,6 +45,7 @@ public class BarnRobot {
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
         drive = new Drivetrain(opMode);
         pinpoint = new Pinpoint();
+        limelight = new Limelight();
         telemetry = opMode.telemetry;
     }
 
