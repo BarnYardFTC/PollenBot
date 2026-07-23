@@ -11,7 +11,7 @@ public class OpmodeData {
     public static AllianceColor color;
     public static Pose2D pose2DSetter = new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0);
     public static Pose2D initialPose2D;
-    public static Pose initialPose = new Pose(pose2DSetter.getX(DistanceUnit.INCH), pose2DSetter.getY(DistanceUnit.INCH), pose2DSetter.getHeading(AngleUnit.RADIANS));
+//    public static Pose initialPose = new Pose(pose2DSetter.getX(DistanceUnit.INCH), pose2DSetter.getY(DistanceUnit.INCH), pose2DSetter.getHeading(AngleUnit.RADIANS));
 
     public static void updatePose(Pose2D pose2D){
         initialPose2D = pose2D;

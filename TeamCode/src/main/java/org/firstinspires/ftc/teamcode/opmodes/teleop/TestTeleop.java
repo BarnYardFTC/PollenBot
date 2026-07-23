@@ -19,7 +19,7 @@ public class TestTeleop extends CommandOpMode {
 
         if(OpmodeData.initialPose2D != null){
             robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
-        }
+        } else OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
 
     }
 

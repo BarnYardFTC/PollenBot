@@ -17,7 +17,7 @@ public class TeleopTemplate {
         PhotonCore.enable();
         robot.init(opMode);
 //        robot.drive.follower.setStartingPose(new Pose(OpmodeData.initialPose2D.getX(DistanceUnit.INCH), OpmodeData.initialPose2D.getY(DistanceUnit.INCH), OpmodeData.initialPose2D.getHeading(AngleUnit.RADIANS)));
-        robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
+//        robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
 
         robot.drive.setDefaultCommand(robot.drive.driveFollowerCommand());
 
