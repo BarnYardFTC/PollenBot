@@ -184,12 +184,16 @@ public class Drivetrain extends SubsystemBase {
         if(follower.getPose()==null){
             return;}
         double x = BarnRobot.getInstance().limelight.getTx();
-        double turnPower = -x * 0.02;
         follower.setHeadingPIDFCoefficients(Constants.followerConstants.coefficientsHeadingPIDF);
         if (!follower.getTeleopDrive()) {
             follower.startTeleopDrive(true);}
-        follower.setTeleOpDrive(0,0,turnPower,false);
-
+        if(x==0){
+            follower.setTeleOpDrive(0,0,0.325,false);
+        }
+        else {
+            double turnPower = -x * 0.02;
+            follower.setTeleOpDrive(0, 0, turnPower, false);
+        }
 
 
     }
