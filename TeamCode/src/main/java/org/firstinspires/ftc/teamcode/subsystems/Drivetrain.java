@@ -17,12 +17,13 @@ import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 import org.firstinspires.ftc.teamcode.general.Constants;
+import org.firstinspires.ftc.teamcode.general.Hardware;
 
 public class Drivetrain extends SubsystemBase {
-    private DcMotor leftFront;
-    private DcMotor rightFront;
-    private DcMotor leftBack;
-    private DcMotor rightBack;
+    private final DcMotor leftFront;
+    private final DcMotor rightFront;
+    private final DcMotor leftBack;
+    private final DcMotor rightBack;
 
     public Follower follower;
 
@@ -32,8 +33,8 @@ public class Drivetrain extends SubsystemBase {
     private final double FAST_SPEED = 1.0;
 
     private Pose trackingPose = null;
-    private PIDFController trackingPIDF;
-    private PIDFController secondaryTrackingPIDF;
+    private final PIDFController trackingPIDF;
+    private final PIDFController secondaryTrackingPIDF;
 
 
     public Drivetrain(OpMode opMode) {
@@ -177,4 +178,25 @@ public class Drivetrain extends SubsystemBase {
     public Command clearTrackingPoseCommand() {
         return new InstantCommand(() -> trackingPose = null, this);
     }
+
+
+    public void checkTx(){
+        if(BarnRobot.getInstance().limelight.getTx()>0){
+            leftFront.setPower(0.1);
+            leftBack.setPower(0.1);
+            rightBack.setPower(-0.1);
+            rightFront.setPower(-0.1);
+        }
+        else if (BarnRobot.getInstance().limelight.getTx()<0) {
+            leftFront.setPower(-0.1);
+            leftBack.setPower(-0.1);
+            rightBack.setPower(0.1);
+            rightFront.setPower(0.1);
+        }
+    }
+
+    public RunCommand limelightAutoAlign(){
+        return new RunCommand(() -> checkTx());
+    }
+
 }
