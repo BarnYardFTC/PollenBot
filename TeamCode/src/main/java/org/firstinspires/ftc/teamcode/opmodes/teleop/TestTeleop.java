@@ -16,22 +16,27 @@ public class TestTeleop extends CommandOpMode {
     @Override
     public void initialize() {
         TeleopTemplate.apply(this);
-
+        robot.limelight.start();
+        robot.limelight.pipelineSwitch(0);
     }
 
     @Override
     public void run() {
         super.run();
         robot.periodic();
+        robot.limelight.update();
 
         OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
+//
+//        robot.telemetry.addData("Pinpoint X", robot.pinpoint.get().getPosition().getX(DistanceUnit.INCH));
+//        robot.telemetry.addData("Pinpoint Y", robot.pinpoint.get().getPosition().getY(DistanceUnit.INCH));
+//        robot.telemetry.addData("Pinpoint Heading", robot.pinpoint.get().getPosition().getHeading(AngleUnit.DEGREES));
+//
+//        robot.telemetry.addData("Data X", OpmodeData.initialPose2D.getX(DistanceUnit.INCH));
+//        robot.telemetry.addData("Data Y", OpmodeData.initialPose2D.getY(DistanceUnit.INCH));
+//        robot.telemetry.addData("Data Heading", OpmodeData.initialPose2D.getHeading(AngleUnit.DEGREES));
 
-        robot.telemetry.addData("Pinpoint X", robot.pinpoint.get().getPosition().getX(DistanceUnit.INCH));
-        robot.telemetry.addData("Pinpoint Y", robot.pinpoint.get().getPosition().getY(DistanceUnit.INCH));
-        robot.telemetry.addData("Pinpoint Heading", robot.pinpoint.get().getPosition().getHeading(AngleUnit.DEGREES));
 
-        robot.telemetry.addData("Data X", OpmodeData.initialPose2D.getX(DistanceUnit.INCH));
-        robot.telemetry.addData("Data Y", OpmodeData.initialPose2D.getY(DistanceUnit.INCH));
-        robot.telemetry.addData("Data Heading", OpmodeData.initialPose2D.getHeading(AngleUnit.DEGREES));
+        robot.telemetry.addData("tx: ", robot.limelight.getTx());
     }
 }
