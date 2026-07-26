@@ -28,6 +28,7 @@ public class Drivetrain extends SubsystemBase {
     public Follower follower;
 
     private double speedModifier;
+    private double  turnPower = 0;
 
     private final double SLOW_SPEED = 0.3;
     private final double FAST_SPEED = 1.0;
@@ -119,6 +120,29 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    private void driveAutoAlignment() {
+        double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
+        double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
+        double tX = BarnRobot.getInstance().limelight.getTx();
+        double turn = 0;
+
+        if(tX==0){
+            turnPower = 0.325;
+        }
+        else {
+            turnPower = -x * 0.02;
+        }
+
+        if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
+            follower.startTeleopDrive(true);
+        }
+        try {
+            follower.setTeleOpDrive(x, y, turn, false);
+        } catch (Exception e) {
+            BarnRobot.getInstance().telemetry.addData("failed to set teleop", e);
+        }
+    }
+
     private void face(Pose pose) {
         Pose currentPose = follower.getPose();
         double targetHeading = Math.atan2(
@@ -139,6 +163,10 @@ public class Drivetrain extends SubsystemBase {
 
     public RunCommand drivePollenCommand() {
         return new RunCommand(this::drivePollen, this);
+    }
+
+    public RunCommand driveAutoAlignCommand() {
+        return new RunCommand(this::driveAutoAlignment, this);
     }
 
     public Command setSlowModeCommand() {
