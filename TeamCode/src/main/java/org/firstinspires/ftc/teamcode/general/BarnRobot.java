@@ -6,8 +6,11 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Limelight;
 import org.firstinspires.ftc.teamcode.subsystems.Pinpoint;
+import org.firstinspires.ftc.teamcode.subsystems.Scoop;
+import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 public class BarnRobot {
     private static BarnRobot instance;
@@ -23,6 +26,11 @@ public class BarnRobot {
     public Pinpoint pinpoint;
 
     public Limelight limelight;
+
+    public Intake intake;
+    public Transfer transfer;
+
+    public Scoop scoop;
 
     public static boolean isRobotInitialized = false;
 
@@ -44,6 +52,9 @@ public class BarnRobot {
         hardware = new Hardware(opMode.hardwareMap);
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
         drive = new Drivetrain(opMode);
+        intake = new Intake();
+        transfer = new Transfer();
+        scoop = new Scoop();
         pinpoint = new Pinpoint();
         limelight = new Limelight();
         telemetry = opMode.telemetry;
