@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.ConditionalCommand;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
@@ -18,6 +19,8 @@ import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 import org.firstinspires.ftc.teamcode.general.Constants;
 import org.firstinspires.ftc.teamcode.general.Hardware;
+
+import java.util.function.BooleanSupplier;
 
 public class Drivetrain extends SubsystemBase {
     private final DcMotor leftFront;
@@ -123,21 +126,12 @@ public class Drivetrain extends SubsystemBase {
     private void driveAutoAlignment() {
         double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
         double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
-        double tX = BarnRobot.getInstance().limelight.getTx();
-        double turn = 0;
-
-        if(tX==0){
-            turnPower = 0.325;
-        }
-        else {
-            turnPower = -x * 0.02;
-        }
 
         if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
             follower.startTeleopDrive(true);
         }
         try {
-            follower.setTeleOpDrive(x, y, turn, false);
+            follower.setTeleOpDrive(x, y, turnPower, false);
         } catch (Exception e) {
             BarnRobot.getInstance().telemetry.addData("failed to set teleop", e);
         }
@@ -167,6 +161,30 @@ public class Drivetrain extends SubsystemBase {
 
     public RunCommand driveAutoAlignCommand() {
         return new RunCommand(this::driveAutoAlignment, this);
+    }
+
+    public Command setTurnPower(double power){
+        return new InstantCommand(() -> turnPower = power);
+    }
+
+    public Command setAlign() {
+        return new ConditionalCommand(
+                setTurnPower(0.325),
+
+                new RunCommand(
+                        () -> {
+                            double tx = BarnRobot.getInstance().limelight.getTx();
+                            turnPower = -tx * 0.02;
+                        },
+                        this
+                ),
+
+                () -> BarnRobot.getInstance().limelight.getTx() == 0
+        );
+    }
+
+    public Command setNormal(){
+        return new InstantCommand(() -> turnPower = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7);
     }
 
     public Command setSlowModeCommand() {
