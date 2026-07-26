@@ -180,19 +180,18 @@ public class Drivetrain extends SubsystemBase {
     }
 
 
-    public void checkTx(){
-        if(BarnRobot.getInstance().limelight.getTx()>0){
-            leftFront.setPower(0.1);
-            leftBack.setPower(0.1);
-            rightBack.setPower(-0.1);
-            rightFront.setPower(-0.1);
-        }
-        else if (BarnRobot.getInstance().limelight.getTx()<0) {
-            leftFront.setPower(-0.1);
-            leftBack.setPower(-0.1);
-            rightBack.setPower(0.1);
-            rightFront.setPower(0.1);
-        }
+    public void checkTx() {
+        if(follower.getPose()==null){
+            return;}
+        double x = BarnRobot.getInstance().limelight.getTx();
+        double turnPower = -x * 0.02;
+        follower.setHeadingPIDFCoefficients(Constants.followerConstants.coefficientsHeadingPIDF);
+        if (!follower.getTeleopDrive()) {
+            follower.startTeleopDrive(true);}
+        follower.setTeleOpDrive(0,0,turnPower,false);
+
+
+
     }
 
     public RunCommand limelightAutoAlign(){
