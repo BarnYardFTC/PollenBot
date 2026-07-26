@@ -103,6 +103,21 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
+    private void drivePollen() {
+        double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
+        double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
+        double turn = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7;
+
+        if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
+            follower.startTeleopDrive(true);
+        }
+        try {
+            follower.setTeleOpDrive(x, y, turn, false);
+        } catch (Exception e) {
+            BarnRobot.getInstance().telemetry.addData("failed to set teleop", e);
+        }
+    }
+
     private void face(Pose pose) {
         Pose currentPose = follower.getPose();
         double targetHeading = Math.atan2(
@@ -112,8 +127,17 @@ public class Drivetrain extends SubsystemBase {
         follower.holdPoint(new Pose(currentPose.getX(), currentPose.getY(), targetHeading));
     }
 
+    private void straighten() {
+        Pose currentPose = follower.getPose();
+        follower.holdPoint(new Pose(currentPose.getX(), currentPose.getY(), Math.toRadians(90)));
+    }
+
     public RunCommand driveFollowerCommand() {
         return new RunCommand(this::driveFollower, this);
+    }
+
+    public RunCommand drivePollenCommand() {
+        return new RunCommand(this::drivePollen, this);
     }
 
     public Command setSlowModeCommand() {
@@ -136,6 +160,10 @@ public class Drivetrain extends SubsystemBase {
 
     public Command holdCommand() {
         return new InstantCommand(() -> follower.holdPoint(follower.getPose()), this);
+    }
+
+    public Command straightenCommand() {
+        return new InstantCommand(this::straighten, this);
     }
 
     public Command faceCommand(Pose targetPose) {
