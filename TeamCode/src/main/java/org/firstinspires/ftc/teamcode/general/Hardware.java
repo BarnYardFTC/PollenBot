@@ -20,10 +20,11 @@ public class Hardware {
 
     public static final String LIMELIGHT_CONFIG_NAME = "limelight";
 
-    public static final String INTAKE_CONFIG_NAME = "intake";
-    public static final String TRANSFER_CONFIG_NAME = "transfer";
+    //TBD
+    public static final String INTAKE_CONFIG_NAME = "intakeMotor";
+    public static final String TRANSFER_CONFIG_NAME = "transferMotor";
 
-    public static final String SCOOP_CONFIG_NAME = "scoop";
+    public static final String SCOOP_CONFIG_NAME = "scoopServo";
 
     public Limelight3A limelight;
 
