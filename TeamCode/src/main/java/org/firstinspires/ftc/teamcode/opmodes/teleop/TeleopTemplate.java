@@ -43,6 +43,10 @@ public class TeleopTemplate {
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
                 .whenActive(robot.drive.holdCommand());
 
+        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenActive(robot.drive.straightenCommand());
+
+
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenActive(robot.drive.goToCommand(new Pose(20, 20, 0)));
     }
