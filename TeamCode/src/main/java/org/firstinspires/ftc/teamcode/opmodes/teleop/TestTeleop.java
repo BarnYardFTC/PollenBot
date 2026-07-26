@@ -26,7 +26,7 @@ public class TestTeleop extends CommandOpMode {
         robot.periodic();
         robot.limelight.update();
 
-        OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
+//        OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
 //
 //        robot.telemetry.addData("Pinpoint X", robot.pinpoint.get().getPosition().getX(DistanceUnit.INCH));
 //        robot.telemetry.addData("Pinpoint Y", robot.pinpoint.get().getPosition().getY(DistanceUnit.INCH));
