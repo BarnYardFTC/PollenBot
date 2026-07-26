@@ -52,7 +52,10 @@ public class TeleopTemplate {
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenActive(robot.drive.goToCommand(new Pose(20, 20, 0)));
 
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-//                .toggleWhenActive(robo)
+        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                .toggleWhenActive(
+                        robot.drive.setAlign(),
+                        robot.drive.setNormal()
+                );
     }
 }
