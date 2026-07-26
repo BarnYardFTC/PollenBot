@@ -5,6 +5,7 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Hardware {
 
@@ -19,6 +20,11 @@ public class Hardware {
 
     public static final String LIMELIGHT_CONFIG_NAME = "limelight";
 
+    public static final String INTAKE_CONFIG_NAME = "intake";
+    public static final String TRANSFER_CONFIG_NAME = "transfer";
+
+    public static final String SCOOP_CONFIG_NAME = "scoop";
+
     public Limelight3A limelight;
 
     public GoBildaPinpointDriver pinpoint;
@@ -27,6 +33,11 @@ public class Hardware {
     public DcMotor rightFrontDrivetrain;
     public DcMotor leftBackDrivetrain;
     public DcMotor rightBackDrivetrain;
+
+    public DcMotor intake;
+    public DcMotor transfer;
+
+    public Servo scoop;
 
     public Hardware(HardwareMap hwMap) {
         this.hwMap = hwMap;
@@ -39,6 +50,11 @@ public class Hardware {
         rightFrontDrivetrain = hwMap.get(DcMotor.class, RIGHT_FRONT_DRIVETRAIN_CONFIG_NAME);
         leftBackDrivetrain = hwMap.get(DcMotor.class, LEFT_BACK_DRIVETRAIN_CONFIG_NAME);
         rightBackDrivetrain = hwMap.get(DcMotor.class, RIGHT_BACK_DRIVETRAIN_CONFIG_NAME);
+
+        intake = hwMap.get(DcMotor.class, INTAKE_CONFIG_NAME);
+        transfer = hwMap.get(DcMotor.class, TRANSFER_CONFIG_NAME);
+
+        scoop = hwMap.get(Servo.class, SCOOP_CONFIG_NAME);
     }
 
     private void initSensors(){
