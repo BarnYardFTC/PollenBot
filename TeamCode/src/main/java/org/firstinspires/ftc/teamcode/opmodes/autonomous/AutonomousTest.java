@@ -21,8 +21,8 @@ public class AutonomousTest extends CommandOpMode {
     public void initialize() {
         robot = BarnRobot.getInstance();
         robot.init(this);
-        robot.drive.follower.setStartingPose(CENTER_POSE);
-        AutonomousBase.buildPathChains(robot.drive.follower);
+        robot.drive.follower.setStartingPose(PollenBase.FIRST_POSE);
+        PollenBase.buildPathChains(robot.drive.follower);
         schedule(autoRoutine());
     }
 
