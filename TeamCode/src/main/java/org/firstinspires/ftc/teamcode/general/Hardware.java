@@ -21,10 +21,10 @@ public class Hardware {
     public static final String LIMELIGHT_CONFIG_NAME = "limelight";
 
     //TBD
-    public static final String INTAKE_CONFIG_NAME = "intakeMotor";
-    public static final String TRANSFER_CONFIG_NAME = "transferMotor";
+//    public static final String INTAKE_CONFIG_NAME = "intakeMotor";
+//    public static final String TRANSFER_CONFIG_NAME = "transferMotor";
 
-    public static final String SCOOP_CONFIG_NAME = "scoopServo";
+//    public static final String SCOOP_CONFIG_NAME = "scoopServo";
 
     public Limelight3A limelight;
 
@@ -52,10 +52,10 @@ public class Hardware {
         leftBackDrivetrain = hwMap.get(DcMotor.class, LEFT_BACK_DRIVETRAIN_CONFIG_NAME);
         rightBackDrivetrain = hwMap.get(DcMotor.class, RIGHT_BACK_DRIVETRAIN_CONFIG_NAME);
 
-        intake = hwMap.get(DcMotor.class, INTAKE_CONFIG_NAME);
-        transfer = hwMap.get(DcMotor.class, TRANSFER_CONFIG_NAME);
-
-        scoop = hwMap.get(Servo.class, SCOOP_CONFIG_NAME);
+//        intake = hwMap.get(DcMotor.class, INTAKE_CONFIG_NAME);
+//        transfer = hwMap.get(DcMotor.class, TRANSFER_CONFIG_NAME);
+//
+//        scoop = hwMap.get(Servo.class, SCOOP_CONFIG_NAME);
     }
 
     private void initSensors(){

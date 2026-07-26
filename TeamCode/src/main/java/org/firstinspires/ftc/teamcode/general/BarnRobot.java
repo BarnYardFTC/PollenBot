@@ -52,9 +52,9 @@ public class BarnRobot {
         hardware = new Hardware(opMode.hardwareMap);
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
         drive = new Drivetrain(opMode);
-        intake = new Intake();
-        transfer = new Transfer();
-        scoop = new Scoop();
+//        intake = new Intake();
+//        transfer = new Transfer();
+//        scoop = new Scoop();
         pinpoint = new Pinpoint();
         limelight = new Limelight();
         telemetry = opMode.telemetry;
