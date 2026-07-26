@@ -23,6 +23,6 @@ public class Intake extends SubsystemBase {
     }
 
     public Command disableCommand(){
-        return new InstantCommand(() -> intakeMotor.setPower(1), this);
+        return new InstantCommand(() -> intakeMotor.setPower(0), this);
     }
 }
