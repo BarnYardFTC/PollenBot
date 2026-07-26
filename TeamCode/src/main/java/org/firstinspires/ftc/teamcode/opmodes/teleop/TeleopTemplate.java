@@ -25,7 +25,7 @@ public class TeleopTemplate {
 
         //        robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
 
-        robot.drive.setDefaultCommand(robot.drive.drivePollenCommand());
+        robot.drive.setDefaultCommand(robot.drive.driveAutoAlignCommand());
 
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
                 .toggleWhenActive(
@@ -52,7 +52,7 @@ public class TeleopTemplate {
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
                 .whenActive(robot.drive.goToCommand(new Pose(20, 20, 0)));
 
-        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whileActiveContinuous(robot.drive.limelightAutoAlign());
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+//                .toggleWhenActive(robo)
     }
 }
