@@ -234,7 +234,11 @@ public class Drivetrain extends SubsystemBase {
         if (!follower.getTeleopDrive()) {
             follower.startTeleopDrive(true);}
         if(x==0){
-            follower.setTeleOpDrive(0,0,0.325,false);
+            if(follower.getHeading()<3 && follower.getHeading()>0){
+            follower.setTeleOpDrive(0,0,-0.325,false);}
+            else{
+                follower.setTeleOpDrive(0,0,0.325,false);
+            }
         }
         else {
             double turnPower = -x * 0.02;
