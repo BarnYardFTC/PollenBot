@@ -38,5 +38,6 @@ public class TestTeleop extends CommandOpMode {
 
 
         robot.telemetry.addData("tx: ", robot.limelight.getTx());
+        robot.telemetry.addData("heading ", robot.drive.follower.getHeading());
     }
 }
