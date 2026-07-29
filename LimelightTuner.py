@@ -23,15 +23,15 @@ def limelightTuning():
         "fiducial_type": "aprilClassic36h11"
     }
 
-    bestExposure = 20
-    bestGain = 0
-    bestBlackLevel = 0
+    bestExposure = 1000
+    bestGain = 30
+    bestBlackLevel = 12
     bestScore = 0.0
 
 
-    testExposures = [20, 100, 200, 300, 400, 500, 600, 800, 1000]
-    testGains = [1, 2, 5, 6, 8 ,10, 13, 15, 20, 25, 30]
-    testBlackLevels = [1, 3, 5 ,6, 8,10, 12]
+    testExposures = [1000, 800, 600, 500, 400, 300, 200, 100, 20]
+    testGains = [30, 25, 20, 15, 13, 10, 8, 6, 5, 2, 1]
+    testBlackLevels = [12, 10, 8, 6, 5, 3, 1]
 
     for exp in testExposures:
         for gain in testGains:
@@ -42,24 +42,20 @@ def limelightTuning():
                 pipeline_config['black_level'] = blk
 
                 ll.update_pipeline(json.dumps(pipeline_config))
-                time.sleep(0.001)
+                time.sleep(0.1)
                 results = ll.get_results()
-               # llResults = limelightresults.parse_results(results).FidusialResults()
                 parsed_results = limelightresults.parse_results(results)
-                targetArea = 0
 
                 for fiducial in parsed_results.fiducialResults:
                     if fiducial.fiducial_id == 22:
-                        targetArea = fiducial.target_area
-               # targetArea = llResults.targetArea
+                        if exp > bestExposure: bestExposure = exp
+                        if gain > bestGain: bestGain = gain
+                        if blk < bestBlackLevel: bestBlackLevel = blk
 
-                        if targetArea > bestScore:
-                            bestScore = targetArea
-                            bestGain = gain
-                            bestBlackLevel = blk
-                            bestExposure = exp
+                        print("I see goal!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                        print(len(fiducial.points))
 
-                print("Testing exp: " + str(exp) + "\ngain: " + str(gain) + "\nblack level: " + str(blk) + "\nta: " + str(targetArea))
+                print("Testing exp: " + str(exp) + "\ngain: " + str(gain) + "\nblack level: " + str(blk))
 
     finalPiplineJson = {
         'exposure': bestExposure,
@@ -70,6 +66,11 @@ def limelightTuning():
     ll.update_pipeline(json.dumps(finalPiplineJson),flush=1)
     print("Best exp: " + str(bestExposure) + "\nBest gain: " + str(bestGain) + "\nBest black level: " + str(bestBlackLevel)  + "\nBest score " + str(bestScore))
     ll.disable_websocket()
+
+    print(bestExposure)
+    print(bestGain)
+    print(bestBlackLevel)
+    print(bestScore)
 
 if __name__ == "__main__":
     limelightTuning()
