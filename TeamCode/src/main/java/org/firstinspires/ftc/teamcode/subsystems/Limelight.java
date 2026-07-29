@@ -1,16 +1,28 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import androidx.activity.SystemBarStyle;
+
+import com.qualcomm.hardware.limelightvision.LLFieldMap;
 import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.seattlesolvers.solverslib.command.SubsystemBase;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 
-public class Limelight {
+import java.util.List;
+
+public class Limelight extends SubsystemBase {
     private final Limelight3A limelight;
     private LLResult latestResult;
 
+    private List<LLResultTypes.FiducialResult> feducialResultates ;
     public Limelight() {
         limelight = BarnRobot.getInstance().hardware.limelight;
+        limelight.setPollRateHz(100);
+        start();
     }
 
     public void start() {
@@ -26,7 +38,11 @@ public class Limelight {
     }
 
     public void update() {
-        latestResult = limelight.getLatestResult();
+        LLResult result = limelight.getLatestResult();
+        if (result != null) {
+            latestResult = result;
+            feducialResultates = latestResult.getFiducialResults();
+        }
     }
 
     public LLResult getLatestResult() {
@@ -64,4 +80,32 @@ public class Limelight {
     public Limelight3A get() {
         return limelight;
     }
+
+//    LLResultTypes.FiducialResult goalD = null;
+//
+//    double goalDistance = 1;
+//    public double getDistance() {
+//        if (hasValidTarget() && feducialResultates != null && !feducialResultates.isEmpty()) {
+//            goalD = feducialResultates.get(0);
+//            for (LLResultTypes.FiducialResult fr : feducialResultates) {
+//                if (fr.getTargetArea() > goalD.getTargetArea()) {
+//                    goalD = fr;
+//                }
+//            }
+//            Pose3D pose = goalD.getTargetPoseCameraSpace();
+//            // TEMP DEBUG
+//            System.out.println("x=" + pose.getPosition().x + " y=" + pose.getPosition().y + " z=" + pose.getPosition().z + " ta=" + goalD.getTargetArea());
+//            goalDistance = pose.getPosition().z;
+//        }
+//        return goalDistance;
+//    }
+
+    @Override
+    public void periodic() {
+        super.periodic();
+        update();
+    }
+
+//    public void displayTelemetry(){
+//    }
 }

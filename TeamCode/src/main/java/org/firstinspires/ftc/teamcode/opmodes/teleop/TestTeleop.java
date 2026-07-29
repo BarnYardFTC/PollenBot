@@ -16,15 +16,13 @@ public class TestTeleop extends CommandOpMode {
     @Override
     public void initialize() {
         TeleopTemplate.apply(this);
-        robot.limelight.start();
-        robot.limelight.pipelineSwitch(0);
+        robot.limelight.pipelineSwitch(1);
     }
 
     @Override
     public void run() {
         super.run();
         robot.periodic();
-        robot.limelight.update();
 
 //        OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
 //
@@ -39,5 +37,6 @@ public class TestTeleop extends CommandOpMode {
 
         robot.telemetry.addData("tx: ", robot.limelight.getTx());
         robot.telemetry.addData("heading ", robot.drive.follower.getHeading());
+//        robot.telemetry.addData("distance ", robot.limelight.getDistance());
     }
 }

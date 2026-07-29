@@ -235,9 +235,9 @@ public class Drivetrain extends SubsystemBase {
             follower.startTeleopDrive(true);}
         if(x==0){
             if(follower.getHeading()<3 && follower.getHeading()>0){
-            follower.setTeleOpDrive(0,0,-0.325,false);}
+            follower.setTeleOpDrive(0,0,-0.450,false);}
             else{
-                follower.setTeleOpDrive(0,0,0.325,false);
+                follower.setTeleOpDrive(0,0,0.450,false);
             }
         }
         else {
