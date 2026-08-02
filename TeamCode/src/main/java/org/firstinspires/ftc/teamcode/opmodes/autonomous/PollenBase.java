@@ -7,44 +7,45 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 // ega is great ega is evrything
 public class PollenBase {
+    static final Pose START_POSE = new Pose(62.530605647721366,133.70954444209715);
 
-    static final Pose FIRST_POSE = new Pose(70.7861482381531, 134.36998784933172, Math.toRadians(-95));
-    static final Pose FIRST_TO_SECOND_1_CURVE = new Pose(61.46142162818956, 35.849331713244226);
-    static final Pose FIRST_TO_SECOND_2_CURVE = new Pose(86.82563791008505, 23.210814094775206);
-    static final Pose FIRST_TO_SECOND_3_CURVE = new Pose(58.11300121506683, 16.161603888213854);
-    static final Pose FIRST_TO_SECOND_4_CURVE = new Pose(104.01883353584448, 33.52673147023086);
-    static final Pose FIRST_TO_SECOND_5_CURVE = new Pose(94.5987241798299, 51.807411907654924);
-    static final Pose SECOND_POSE = new Pose(93.99696233292833, 61.27399756986633, Math.toRadians(180));
+    static final Pose LEFT_MIDDLE_INTAKE_1_CURVE = new Pose(61.46142162818956, 35.849331713244226);
+    static final Pose LEFT_MIDDLE_INTAKE_2_CURVE = new Pose(86.82563791008505, 23.210814094775206);
+    static final Pose LEFT_MIDDLE_INTAKE_3_CURVE = new Pose(58.11300121506683, 16.161603888213854);
+    static final Pose LEFT_MIDDLE_INTAKE_4_CURVE = new Pose(104.01883353584448, 33.52673147023086);
+    static final Pose LEFT_MIDDLE_INTAKE_5_CURVE = new Pose(94.5987241798299, 51.807411907654924);
+    static final Pose LEFT_MIDDLE_INTAKE = new Pose(93.99696233292833, 61.27399756986633);
+    static final Pose OFFLOAD = new Pose(94.24104485807864,5.819753918113214,Math.toRadians(90));
+    static final Pose RIGHT_INTAKE_1_CURVE = new Pose (130.1857698273343,20.96063918293202);
+    static final Pose RIGHT_INTAKE_2_CURVE = new Pose (113.86985245187864,56.03475825948124);
+    static final Pose RIGHT_INTAKE = new Pose(118.80364181967619,63.31233854252604,Math.toRadians(90));
 
-    static final Pose THIRD_POSE = new Pose(94.24104485807864,5.819753918113214,90);
-    static final Pose THIRD_TO_FOURTH_1_CURVE = new Pose (130.1857698273343,20.96063918293202);
-    static final Pose THIRD_TO_FOURTH_2_CURVE = new Pose (113.86985245187864,56.03475825948124);
-    static final Pose FOURTH_POSE = new Pose(118.80364181967619,63.31233854252604,90);
-    static final Pose FIFTH_POSE = new Pose(94.12505323284077,6.068858911578701,90);
-    static PathChain firstToSecond, secondToThird;
-    static PathChain thirdToFourth;
-    static PathChain fourthToFifth;
+    static PathChain leftMiddleIntake , offloadOne,rightIntake, offloadTwo;
+
+
     static void buildPathChains(Follower follower) {
-        firstToSecond = follower.pathBuilder()
-                .addPath(new BezierCurve(FIRST_POSE,
-                        FIRST_TO_SECOND_1_CURVE,
-                        FIRST_TO_SECOND_2_CURVE,
-                        FIRST_TO_SECOND_3_CURVE,
-                        FIRST_TO_SECOND_4_CURVE,
-                        FIRST_TO_SECOND_5_CURVE,
-                        SECOND_POSE))
+
+         leftMiddleIntake= follower.pathBuilder()
+                .addPath(new BezierCurve(START_POSE,
+                        LEFT_MIDDLE_INTAKE_1_CURVE,
+                        LEFT_MIDDLE_INTAKE_2_CURVE,
+                        LEFT_MIDDLE_INTAKE_3_CURVE,
+                        LEFT_MIDDLE_INTAKE_4_CURVE,
+                        LEFT_MIDDLE_INTAKE_5_CURVE,
+                        LEFT_MIDDLE_INTAKE))
                 .setTangentHeadingInterpolation()
                 .build();
-        secondToThird = follower.pathBuilder()
-                .addPath(new BezierLine(SECOND_POSE,THIRD_POSE))                .setConstantHeadingInterpolation(SECOND_POSE.getHeading())
+        offloadOne = follower.pathBuilder()
+                .addPath(new BezierLine(LEFT_MIDDLE_INTAKE,OFFLOAD))
+                .setConstantHeadingInterpolation(OFFLOAD.getHeading())
                 .build();
-        thirdToFourth = follower.pathBuilder()
-                .addPath(new BezierCurve(THIRD_POSE,THIRD_TO_FOURTH_1_CURVE,THIRD_TO_FOURTH_2_CURVE,FOURTH_POSE))
-                .setConstantHeadingInterpolation(THIRD_POSE.getHeading())
+        rightIntake = follower.pathBuilder()
+                .addPath(new BezierCurve(OFFLOAD,RIGHT_INTAKE_1_CURVE,RIGHT_INTAKE_2_CURVE,RIGHT_INTAKE))
+                .setConstantHeadingInterpolation(OFFLOAD.getHeading())
                 .build();
-        fourthToFifth = follower.pathBuilder()
-                .addPath(new BezierLine(FOURTH_POSE, FIFTH_POSE))
-                .setConstantHeadingInterpolation(FOURTH_POSE.getHeading())
+        offloadTwo = follower.pathBuilder()
+                .addPath(new BezierLine(RIGHT_INTAKE, OFFLOAD))
+                .setConstantHeadingInterpolation(RIGHT_INTAKE.getHeading())
                 .build();
     }
 

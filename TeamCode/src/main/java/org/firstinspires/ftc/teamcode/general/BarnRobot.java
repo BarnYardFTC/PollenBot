@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Limelight;
 import org.firstinspires.ftc.teamcode.subsystems.Pinpoint;
-import org.firstinspires.ftc.teamcode.subsystems.Scoop;
+//import org.firstinspires.ftc.teamcode.subsystems.Scoop;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 public class BarnRobot {
@@ -30,7 +30,7 @@ public class BarnRobot {
     public Intake intake;
     public Transfer transfer;
 
-    public Scoop scoop;
+    //public Scoop scoop;
 
     public static boolean isRobotInitialized = false;
 
