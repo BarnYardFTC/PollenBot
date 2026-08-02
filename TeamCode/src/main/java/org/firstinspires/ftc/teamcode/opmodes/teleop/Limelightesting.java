@@ -13,8 +13,9 @@ public class Limelightesting extends CommandOpMode {
     @Override
     public void initialize() {
         TeleopTemplate.apply(this);
-        robot.limelight.get().start();
-        robot.limelight.get().pipelineSwitch(0);
+        robot.limelight.start();
+        robot.limelight.pipelineSwitch(1);
+
     }
 
     @Override
