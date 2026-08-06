@@ -7,6 +7,7 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 // ega is great ega is evrything
 public class PollenBase {
+//    public double Cart = 3;
     static final Pose START_POSE = new Pose(62.530605647721366,133.70954444209715);
 
     static final Pose LEFT_MIDDLE_INTAKE_1_CURVE = new Pose(61.46142162818956, 35.849331713244226);
