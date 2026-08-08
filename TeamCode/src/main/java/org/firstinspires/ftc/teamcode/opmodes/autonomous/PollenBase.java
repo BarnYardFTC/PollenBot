@@ -9,7 +9,6 @@ import com.pedropathing.paths.PathChain;
 public class PollenBase {
 //    public double Cart = 3;
     static final Pose START_POSE = new Pose(62.530605647721366,133.70954444209715);
-
     static final Pose LEFT_MIDDLE_INTAKE_1_CURVE = new Pose(61.46142162818956, 35.849331713244226);
     static final Pose LEFT_MIDDLE_INTAKE_2_CURVE = new Pose(86.82563791008505, 23.210814094775206);
     static final Pose LEFT_MIDDLE_INTAKE_3_CURVE = new Pose(58.11300121506683, 16.161603888213854);
@@ -23,9 +22,7 @@ public class PollenBase {
 
     static PathChain leftMiddleIntake , offloadOne,rightIntake, offloadTwo;
 
-
     static void buildPathChains(Follower follower) {
-
          leftMiddleIntake= follower.pathBuilder()
                 .addPath(new BezierCurve(START_POSE,
                         LEFT_MIDDLE_INTAKE_1_CURVE,
@@ -36,14 +33,17 @@ public class PollenBase {
                         LEFT_MIDDLE_INTAKE))
                 .setTangentHeadingInterpolation()
                 .build();
+
         offloadOne = follower.pathBuilder()
                 .addPath(new BezierLine(LEFT_MIDDLE_INTAKE,OFFLOAD))
                 .setConstantHeadingInterpolation(OFFLOAD.getHeading())
                 .build();
+
         rightIntake = follower.pathBuilder()
                 .addPath(new BezierCurve(OFFLOAD,RIGHT_INTAKE_1_CURVE,RIGHT_INTAKE_2_CURVE,RIGHT_INTAKE))
                 .setConstantHeadingInterpolation(OFFLOAD.getHeading())
                 .build();
+
         offloadTwo = follower.pathBuilder()
                 .addPath(new BezierLine(RIGHT_INTAKE, OFFLOAD))
                 .setConstantHeadingInterpolation(RIGHT_INTAKE.getHeading())
