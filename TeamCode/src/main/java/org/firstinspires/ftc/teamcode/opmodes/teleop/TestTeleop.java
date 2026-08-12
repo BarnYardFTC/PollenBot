@@ -16,7 +16,7 @@ public class TestTeleop extends CommandOpMode {
     @Override
     public void initialize() {
         TeleopTemplate.apply(this);
-        robot.limelight.pipelineSwitch(1);
+//        robot.limelight.pipelineSwitch(1);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class TestTeleop extends CommandOpMode {
 //        robot.telemetry.addData("Data Heading", OpmodeData.initialPose2D.getHeading(AngleUnit.DEGREES));
 
 
-        robot.telemetry.addData("tx: ", robot.limelight.getTx());
-        robot.telemetry.addData("heading ", robot.drive.follower.getHeading());
+//        robot.telemetry.addData("tx: ", robot.limelight.getTx());
+//        robot.telemetry.addData("heading ", robot.drive.follower.getHeading());
 //        robot.telemetry.addData("distance ", robot.limelight.getDistance());
     }
 }
