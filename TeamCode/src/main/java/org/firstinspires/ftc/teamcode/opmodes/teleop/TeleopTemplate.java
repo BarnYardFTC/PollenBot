@@ -18,42 +18,48 @@ public class TeleopTemplate {
         robot.init(opMode);
 
 //        if(OpmodeData.initialPose2D != null){
-//            robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
-//        } else OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
-
-        robot.drive.follower.setStartingPose(new Pose(OpmodeData.initialPose2D.getX(DistanceUnit.INCH), OpmodeData.initialPose2D.getY(DistanceUnit.INCH), OpmodeData.initialPose2D.getHeading(AngleUnit.RADIANS)));
-
-        //        robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
-
-        robot.drive.setDefaultCommand(robot.drive.drivePollenCommand());
-
-        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
-                .toggleWhenActive(
-                        robot.drive.setSlowModeCommand(),
-                        robot.drive.setFastModeCommand()
-                );
+////            robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
+////        } else OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
+//
+//        robot.drive.follower.setStartingPose(new Pose(OpmodeData.initialPose2D.getX(DistanceUnit.INCH), OpmodeData.initialPose2D.getY(DistanceUnit.INCH), OpmodeData.initialPose2D.getHeading(AngleUnit.RADIANS)));
+//
+//        //        robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
+//
+//        robot.drive.setDefaultCommand(robot.drive.drivePollenCommand());
+//
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
+//                .toggleWhenActive(
+//                        robot.drive.setSlowModeCommand(),
+//                        robot.drive.setFastModeCommand()
+//                );
+//
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
+//                .toggleWhenActive(
+//                        robot.drive.setTrackingPoseCommand(robot.drive.follower.getPose()),
+//                        robot.drive.clearTrackingPoseCommand()
+//                );
+//
+////        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
+////                        .whenActive(robot.drive.faceCommand(OpmodeData.initialPose));
+//
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
+//                .whenActive(robot.drive.holdCommand());
+//
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+//                .whenActive(robot.drive.straightenCommand());
+//
+//
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
+//                .whenActive(robot.drive.goToCommand(new Pose(20, 20, 0)));
 
         robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-                .toggleWhenActive(
-                        robot.drive.setTrackingPoseCommand(robot.drive.follower.getPose()),
-                        robot.drive.clearTrackingPoseCommand()
-                );
+                        .toggleWhenActive(
+                                robot.scoop.collectCommand(),
+                                robot.scoop.dumpCommand()
+                        );
 
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-//                        .whenActive(robot.drive.faceCommand(OpmodeData.initialPose));
-
-        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
-                .whenActive(robot.drive.holdCommand());
-
-        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenActive(robot.drive.straightenCommand());
-
-
-        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
-                .whenActive(robot.drive.goToCommand(new Pose(20, 20, 0)));
-
-        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whileActiveContinuous(robot.drive.limelightAutoAlign());
+//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+//                .whileActiveContinuous(robot.drive.limelightAutoAlign());
     //                .toggleWhenActive(
 //                        robot.drive.setAlign(),
 //                        robot.drive.setNormal()

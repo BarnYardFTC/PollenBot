@@ -21,9 +21,9 @@ public class AutonomousTest extends CommandOpMode {
     public void initialize() {
         robot = BarnRobot.getInstance();
         robot.init(this);
-        robot.drive.follower.setStartingPose(START_POSE);
-        PollenBase.buildPathChains(robot.drive.follower);
-        schedule(autoRoutine());
+//        robot.drive.follower.setStartingPose(START_POSE);
+//        PollenBase.buildPathChains(robot.drive.follower);
+//        schedule(autoRoutine());
     }
 
     @Override
@@ -32,13 +32,13 @@ public class AutonomousTest extends CommandOpMode {
         super.run();
     }
 
-    private Command autoRoutine() {
-        return new SequentialCommandGroup(
-            new FollowPathCommand(robot.drive.follower, leftMiddleIntake),
-            new FollowPathCommand(robot.drive.follower, offloadOne),
-            new FollowPathCommand(robot.drive.follower, rightIntake),
-            new FollowPathCommand(robot.drive.follower, offloadTwo),
-            new InstantCommand(this::requestOpModeStop)
-        );
-    }
+//    private Command autoRoutine() {
+////        return new SequentialCommandGroup(
+////            new FollowPathCommand(robot.drive.follower, leftMiddleIntake),
+////            new FollowPathCommand(robot.drive.follower, offloadOne),
+////            new FollowPathCommand(robot.drive.follower, rightIntake),
+////            new FollowPathCommand(robot.drive.follower, offloadTwo),
+//            new InstantCommand(this::requestOpModeStop)
+//        );
+//    }
 }
