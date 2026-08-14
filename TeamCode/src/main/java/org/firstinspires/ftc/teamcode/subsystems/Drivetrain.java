@@ -38,8 +38,8 @@ public class Drivetrain extends SubsystemBase {
     private final double FAST_SPEED = 1.0;
 
     private Pose trackingPose = null;
-    private final PIDFController trackingPIDF;
-    private final PIDFController secondaryTrackingPIDF;
+//    private final PIDFController trackingPIDF;
+//    private final PIDFController secondaryTrackingPIDF;
 
 
     public Drivetrain(OpMode opMode) {
@@ -53,8 +53,8 @@ public class Drivetrain extends SubsystemBase {
         initMotor(DcMotorSimple.Direction.REVERSE, leftBack);
         initMotor(DcMotorSimple.Direction.FORWARD, rightBack);
 //        follower = Constants.createFollower(opMode.hardwareMap);
-        trackingPIDF = new PIDFController(Constants.followerConstants.coefficientsHeadingPIDF);
-        secondaryTrackingPIDF = new PIDFController(Constants.followerConstants.coefficientsSecondaryHeadingPIDF);
+//        trackingPIDF = new PIDFController(Constants.followerConstants.coefficientsHeadingPIDF);
+//        secondaryTrackingPIDF = new PIDFController(Constants.followerConstants.coefficientsSecondaryHeadingPIDF);
     }
 
     private void initMotor(DcMotorSimple.Direction direction, DcMotor motor) {
