@@ -1,68 +1,85 @@
-//package org.firstinspires.ftc.teamcode.subsystems;
-//
-//import com.pedropathing.control.PIDFCoefficients;
-//import com.pedropathing.control.PIDFController;
-//import com.pedropathing.follower.Follower;
-//import com.pedropathing.geometry.BezierLine;
-//import com.pedropathing.geometry.Pose;
-//import com.pedropathing.math.MathFunctions;
-//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-//import com.qualcomm.robotcore.hardware.DcMotor;
-//import com.qualcomm.robotcore.hardware.DcMotorSimple;
-//import com.seattlesolvers.solverslib.command.Command;
-//import com.seattlesolvers.solverslib.command.ConditionalCommand;
-//import com.seattlesolvers.solverslib.command.InstantCommand;
-//import com.seattlesolvers.solverslib.command.RunCommand;
-//import com.seattlesolvers.solverslib.command.SubsystemBase;
-//import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
-//
-//import org.firstinspires.ftc.teamcode.general.BarnRobot;
-//import org.firstinspires.ftc.teamcode.general.Constants;
-//import org.firstinspires.ftc.teamcode.general.Hardware;
-//
-//import java.util.function.BooleanSupplier;
-//
-//public class Drivetrain extends SubsystemBase {
-//    private final DcMotor leftFront;
-//    private final DcMotor rightFront;
-//    private final DcMotor leftBack;
-//    private final DcMotor rightBack;
-//
+package org.firstinspires.ftc.teamcode.subsystems;
+
+import com.pedropathing.control.PIDFCoefficients;
+import com.pedropathing.control.PIDFController;
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.BezierLine;
+import com.pedropathing.geometry.Pose;
+import com.pedropathing.math.MathFunctions;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.command.ConditionalCommand;
+import com.seattlesolvers.solverslib.command.InstantCommand;
+import com.seattlesolvers.solverslib.command.RunCommand;
+import com.seattlesolvers.solverslib.command.SubsystemBase;
+import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+import com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand;
+
+import org.firstinspires.ftc.teamcode.general.BarnRobot;
+import org.firstinspires.ftc.teamcode.general.Constants;
+import org.firstinspires.ftc.teamcode.general.Hardware;
+
+import java.util.function.BooleanSupplier;
+
+public class Drivetrain extends SubsystemBase {
+    private final DcMotor leftFront;
+    private final DcMotor rightFront;
+    private final DcMotor leftBack;
+    private final DcMotor rightBack;
+
 //    public Follower follower;
-//
-//    private double speedModifier;
-//    private double  turnPower = 0;
-//
-//    private final double SLOW_SPEED = 0.3;
-//    private final double FAST_SPEED = 1.0;
-//
-//    private Pose trackingPose = null;
-//    private final PIDFController trackingPIDF;
-//    private final PIDFController secondaryTrackingPIDF;
-//
-//
-//    public Drivetrain(OpMode opMode) {
-//        speedModifier = FAST_SPEED;
-//        leftFront = BarnRobot.getInstance().hardware.leftFrontDrivetrain;
-//        rightFront = BarnRobot.getInstance().hardware.rightFrontDrivetrain;
-//        leftBack = BarnRobot.getInstance().hardware.leftBackDrivetrain;
-//        rightBack = BarnRobot.getInstance().hardware.rightBackDrivetrain;
-//        initMotor(DcMotorSimple.Direction.REVERSE, leftFront);
-//        initMotor(DcMotorSimple.Direction.FORWARD, rightFront);
-//        initMotor(DcMotorSimple.Direction.REVERSE, leftBack);
-//        initMotor(DcMotorSimple.Direction.FORWARD, rightBack);
+
+    private double speedModifier;
+    private double  turnPower = 0;
+
+    private final double SLOW_SPEED = 0.3;
+    private final double FAST_SPEED = 1.0;
+
+    private Pose trackingPose = null;
+    private final PIDFController trackingPIDF;
+    private final PIDFController secondaryTrackingPIDF;
+
+
+    public Drivetrain(OpMode opMode) {
+        speedModifier = FAST_SPEED;
+        leftFront = BarnRobot.getInstance().hardware.leftFrontDrivetrain;
+        rightFront = BarnRobot.getInstance().hardware.rightFrontDrivetrain;
+        leftBack = BarnRobot.getInstance().hardware.leftBackDrivetrain;
+        rightBack = BarnRobot.getInstance().hardware.rightBackDrivetrain;
+        initMotor(DcMotorSimple.Direction.REVERSE, leftFront);
+        initMotor(DcMotorSimple.Direction.FORWARD, rightFront);
+        initMotor(DcMotorSimple.Direction.REVERSE, leftBack);
+        initMotor(DcMotorSimple.Direction.FORWARD, rightBack);
 //        follower = Constants.createFollower(opMode.hardwareMap);
-//        trackingPIDF = new PIDFController(Constants.followerConstants.coefficientsHeadingPIDF);
-//        secondaryTrackingPIDF = new PIDFController(Constants.followerConstants.coefficientsSecondaryHeadingPIDF);
-//    }
-//
-//    private void initMotor(DcMotorSimple.Direction direction, DcMotor motor) {
-//        motor.setDirection(direction);
-//        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//    }
-//
+        trackingPIDF = new PIDFController(Constants.followerConstants.coefficientsHeadingPIDF);
+        secondaryTrackingPIDF = new PIDFController(Constants.followerConstants.coefficientsSecondaryHeadingPIDF);
+    }
+
+    private void initMotor(DcMotorSimple.Direction direction, DcMotor motor) {
+        motor.setDirection(direction);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    private void drive() {
+        GamepadEx gamepadEx = BarnRobot.getInstance().gamepadEx1;
+        double lf =  gamepadEx.getLeftY() + gamepadEx.getLeftX() + gamepadEx.getRightX();
+        double rf =  gamepadEx.getLeftY() - gamepadEx.getLeftX() - gamepadEx.getRightX();
+        double lb =  gamepadEx.getLeftY() - gamepadEx.getLeftX() + gamepadEx.getRightX();
+        double rb =  gamepadEx.getLeftY() + gamepadEx.getLeftX() - gamepadEx.getRightX();
+        leftFront.setPower(lf);
+        rightFront.setPower(rf);
+        leftBack.setPower(lb);
+        rightBack.setPower(rb);
+    }
+
+    public RunCommand driveCommand() {
+        return new RunCommand(this::drive, this);
+    }
+
 //    private void driveFollower() {
 //        double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
 //        double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
@@ -150,7 +167,7 @@
 //        Pose currentPose = follower.getPose();
 //        follower.holdPoint(new Pose(currentPose.getX(), currentPose.getY(), Math.toRadians(90)));
 //    }
-//
+
 //    public RunCommand driveFollowerCommand() {
 //        return new RunCommand(this::driveFollower, this);
 //    }
@@ -166,23 +183,23 @@
 //    public Command setTurnPower(double power){
 //        return new InstantCommand(() -> turnPower = power);
 //    }
+
+//    public Command setAlign() {
+//        return new ConditionalCommand(
+//                setTurnPower(0.325),
 //
-////    public Command setAlign() {
-////        return new ConditionalCommand(
-////                setTurnPower(0.325),
-////
-////                new RunCommand(
-////                        () -> {
-//////                            double tx = BarnRobot.getInstance().limelight.getTx();
-////                            turnPower = -tx * 0.02;
-////                        },
-////                        this
-////                ),
-////
-////                () -> BarnRobot.getInstance().limelight.getTx() == 0
-////        );
-////    }
+//                new RunCommand(
+//                        () -> {
+//                            double tx = BarnRobot.getInstance().limelight.getTx();
+//                            turnPower = -tx * 0.02;
+//                        },
+//                        this
+//                ),
 //
+//                () -> BarnRobot.getInstance().limelight.getTx() == 0
+//        );
+//    }
+
 //    public Command setNormal(){
 //        return new InstantCommand(() -> turnPower = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7);
 //    }
@@ -224,32 +241,32 @@
 //    public Command clearTrackingPoseCommand() {
 //        return new InstantCommand(() -> trackingPose = null, this);
 //    }
-//
-//
+
+
 //    public void checkTx() {
 //        if(follower.getPose()==null){
 //            return;}
-////        double x = BarnRobot.getInstance().limelight.getTx();
+//        double x = BarnRobot.getInstance().limelight.getTx();
 //        follower.setHeadingPIDFCoefficients(Constants.followerConstants.coefficientsHeadingPIDF);
 //        if (!follower.getTeleopDrive()) {
-////            follower.startTeleopDrive(true);}
-////        if(x==0){
-////            if(follower.getHeading()<3 && follower.getHeading()>0){
-////            follower.setTeleOpDrive(0,0,-0.450,false);}
-////            else{
-////                follower.setTeleOpDrive(0,0,0.450,false);
-////            }
-////        }
-////        else {
-////            double turnPower = -x * 0.02;
-////            follower.setTeleOpDrive(0, 0, turnPower, false);
+//            follower.startTeleopDrive(true);}
+//        if(x==0){
+//            if(follower.getHeading()<3 && follower.getHeading()>0){
+//            follower.setTeleOpDrive(0,0,-0.450,false);}
+//            else{
+//                follower.setTeleOpDrive(0,0,0.450,false);
+//            }
+//        }
+//        else {
+//            double turnPower = -x * 0.02;
+//            follower.setTeleOpDrive(0, 0, turnPower, false);
 //        }
 //
 //
 //    }
-//
+
 //    public RunCommand limelightAutoAlign(){
 //        return new RunCommand(() -> checkTx());
 //    }
-//
-//}
+
+}
