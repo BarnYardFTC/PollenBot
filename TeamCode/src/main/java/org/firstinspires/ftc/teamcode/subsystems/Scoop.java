@@ -32,11 +32,24 @@ public class Scoop extends SubsystemBase {
         leftServo.setPosition(SCOOP_DUMP);
         rightServo.setPosition(SCOOP_DUMP);
     }
+
+    public void debugPlus() {
+        leftServo.setPosition(leftServo.getPosition() + 0.01);
+        rightServo.setPosition(rightServo.getPosition() + 0.01);
+    }
+
+    public void debugMinus() {
+        leftServo.setPosition(leftServo.getPosition() - 0.01);
+        rightServo.setPosition(rightServo.getPosition() - 0.01);
+    }
+
     public Command collectCommand() {
-        return new InstantCommand(this::collect, this);
+//        return new InstantCommand(this::collect, this);
+        return new InstantCommand(this::debugPlus, this);
     }
 
     public Command dumpCommand() {
-        return new InstantCommand(this::dump, this);
+        return new InstantCommand(this::debugMinus, this);
     }
+
 }
