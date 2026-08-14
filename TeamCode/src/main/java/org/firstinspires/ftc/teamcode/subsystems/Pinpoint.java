@@ -7,16 +7,16 @@
 //import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
 //
 //public class Pinpoint {
-////    private final GoBildaPinpointDriver pinpoint;
-////    public Pinpoint() {
-////        pinpoint = BarnRobot.getInstance().hardware.pinpoint;
-////    }
+//    private final GoBildaPinpointDriver pinpoint;
+//    public Pinpoint() {
+//        pinpoint = BarnRobot.getInstance().hardware.pinpoint;
+//    }
 //
-////    public void update(){
-////        pinpoint.update();
-////    }
+//    public void update(){
+//        pinpoint.update();
+//    }
 //
-////    public GoBildaPinpointDriver get() {
-////        return pinpoint;
-////    }
+//    public GoBildaPinpointDriver get() {
+//        return pinpoint;
+//    }
 //}

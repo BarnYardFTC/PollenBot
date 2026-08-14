@@ -1,23 +1,23 @@
-package org.firstinspires.ftc.teamcode.opmodes.teleop;
-
-import com.pedropathing.geometry.Pose;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
-import com.seattlesolvers.solverslib.photon.PhotonCore;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.firstinspires.ftc.teamcode.general.BarnRobot;
-import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
-
-public class TeleopTemplate {
-    private static final BarnRobot robot = BarnRobot.getInstance();
-    public static void apply(OpMode opMode) {
-        PhotonCore.enable();
-        robot.init(opMode);
-
-//        if(OpmodeData.initialPose2D != null){
+//package org.firstinspires.ftc.teamcode.opmodes.teleop;
+//
+//import com.pedropathing.geometry.Pose;
+//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+//import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+//import com.seattlesolvers.solverslib.photon.PhotonCore;
+//
+//import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+//import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+//import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+//import org.firstinspires.ftc.teamcode.general.BarnRobot;
+//import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
+//
+//public class TeleopTemplate {
+//    private static final BarnRobot robot = BarnRobot.getInstance();
+//    public static void apply(OpMode opMode) {
+//        PhotonCore.enable();
+//        robot.init(opMode);
+//
+////        if(OpmodeData.initialPose2D != null){
 ////            robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
 ////        } else OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
 //
@@ -51,19 +51,13 @@ public class TeleopTemplate {
 //
 //        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
 //                .whenActive(robot.drive.goToCommand(new Pose(20, 20, 0)));
-
-        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-                        .toggleWhenActive(
-                                robot.scoop.collectCommand(),
-                                robot.scoop.dumpCommand()
-                        );
-
+//
 //        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
 //                .whileActiveContinuous(robot.drive.limelightAutoAlign());
-    //                .toggleWhenActive(
-//                        robot.drive.setAlign(),
-//                        robot.drive.setNormal()
-//                );
-
-    }
-}
+//    //                .toggleWhenActive(
+////                        robot.drive.setAlign(),
+////                        robot.drive.setNormal()
+////                );
+//
+//    }
+//}

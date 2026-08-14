@@ -1,20 +1,20 @@
-package org.firstinspires.ftc.teamcode.subsystems;
-
-import androidx.activity.SystemBarStyle;
-
-import com.qualcomm.hardware.limelightvision.LLFieldMap;
-import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.seattlesolvers.solverslib.command.SubsystemBase;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.teamcode.general.BarnRobot;
-
-import java.util.List;
-
-public class Limelight extends SubsystemBase {
+//package org.firstinspires.ftc.teamcode.subsystems;
+//
+//import androidx.activity.SystemBarStyle;
+//
+//import com.qualcomm.hardware.limelightvision.LLFieldMap;
+//import com.qualcomm.hardware.limelightvision.LLResult;
+//import com.qualcomm.hardware.limelightvision.LLResultTypes;
+//import com.qualcomm.hardware.limelightvision.Limelight3A;
+//import com.seattlesolvers.solverslib.command.SubsystemBase;
+//
+//import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+//import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+//import org.firstinspires.ftc.teamcode.general.BarnRobot;
+//
+//import java.util.List;
+//
+//public class Limelight extends SubsystemBase {
 //    private final Limelight3A limelight;
 //    private LLResult latestResult;
 //
@@ -105,7 +105,7 @@ public class Limelight extends SubsystemBase {
 //        super.periodic();
 //        update();
 //    }
-
-//    public void displayTelemetry(){
-//    }
-}
+//
+////    public void displayTelemetry(){
+////    }
+//}
