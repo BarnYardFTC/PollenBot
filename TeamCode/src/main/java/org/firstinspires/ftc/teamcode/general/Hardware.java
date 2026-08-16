@@ -55,8 +55,8 @@ public class Hardware {
         leftBackDrivetrain = hwMap.get(DcMotor.class, LEFT_BACK_DRIVETRAIN_CONFIG_NAME);
         rightBackDrivetrain = hwMap.get(DcMotor.class, RIGHT_BACK_DRIVETRAIN_CONFIG_NAME);
 
-        intake = hwMap.get(DcMotor.class, INTAKE_CONFIG_NAME);
-        transfer = hwMap.get(DcMotor.class, TRANSFER_CONFIG_NAME);
+//        intake = hwMap.get(DcMotor.class, INTAKE_CONFIG_NAME);
+//        transfer = hwMap.get(DcMotor.class, TRANSFER_CONFIG_NAME);
     }
 
     public void initServos() {
