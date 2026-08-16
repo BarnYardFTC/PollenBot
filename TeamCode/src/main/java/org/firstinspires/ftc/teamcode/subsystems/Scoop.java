@@ -13,29 +13,29 @@ public class Scoop extends SubsystemBase {
     private final Servo rightScoopServo;
     private final Servo leftScoopServo;
 
-
-    private final double SCOOP_COLLECT = 0.05;
-    private final double SCOOP_DUMP = 0.6;
+    // Constants should be static final and typically uppercase
+    private static final double SCOOP_COLLECT = 0.05;
+    private static final double SCOOP_DUMP = 0.6;
 
     public Scoop() {
         leftScoopServo = BarnRobot.getInstance().hardware.leftScoopServo;
         rightScoopServo = BarnRobot.getInstance().hardware.rightScoopServo;
+
         rightScoopServo.setDirection(Servo.Direction.FORWARD);
         leftScoopServo.setDirection(Servo.Direction.REVERSE);
     }
 
+    public void setPosition(double position) {
+        rightScoopServo.setPosition(position);
+        leftScoopServo.setPosition(position);
+    }
+
     public Command collectCommand() {
-        return new InstantCommand(() -> {
-            rightScoopServo.setPosition(SCOOP_COLLECT);
-            leftScoopServo.setPosition(SCOOP_COLLECT);
-        });
+        return new InstantCommand(() -> setPosition(SCOOP_COLLECT), this);
     }
 
     public Command dumpCommand() {
-        return new InstantCommand(() -> {
-            rightScoopServo.setPosition(SCOOP_DUMP);
-            leftScoopServo.setPosition(SCOOP_DUMP);
-        });
+        return new InstantCommand(() -> setPosition(SCOOP_DUMP), this);
     }
 
     public Servo getLeftScoopServo() {
