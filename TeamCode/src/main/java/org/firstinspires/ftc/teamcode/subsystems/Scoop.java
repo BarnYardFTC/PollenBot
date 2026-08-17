@@ -23,6 +23,8 @@ public class Scoop extends SubsystemBase {
 
         rightScoopServo.setDirection(Servo.Direction.FORWARD);
         leftScoopServo.setDirection(Servo.Direction.REVERSE);
+
+        setPosition(SCOOP_COLLECT);
     }
 
     public void setPosition(double position) {
@@ -38,11 +40,4 @@ public class Scoop extends SubsystemBase {
         return new InstantCommand(() -> setPosition(SCOOP_DUMP), this);
     }
 
-    public Servo getLeftScoopServo() {
-        return leftScoopServo;
-    }
-
-    public Servo getRightScoopServo() {
-        return rightScoopServo;
-    }
 }
