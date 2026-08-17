@@ -1,63 +1,46 @@
-//package org.firstinspires.ftc.teamcode.opmodes.teleop;
-//
-//import com.pedropathing.geometry.Pose;
-//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-//import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
-//import com.seattlesolvers.solverslib.photon.PhotonCore;
-//
-//import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-//import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-//import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-//import org.firstinspires.ftc.teamcode.general.BarnRobot;
-//import org.firstinspires.ftc.teamcode.opmodes.OpmodeData;
-//
-//public class TeleopTemplate {
-//    private static final BarnRobot robot = BarnRobot.getInstance();
-//    public static void apply(OpMode opMode) {
-//        PhotonCore.enable();
-//        robot.init(opMode);
-//
-////        if(OpmodeData.initialPose2D != null){
-////            robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
-////        } else OpmodeData.initialPose2D = robot.pinpoint.get().getPosition();
-//
-//        robot.drive.follower.setStartingPose(new Pose(OpmodeData.initialPose2D.getX(DistanceUnit.INCH), OpmodeData.initialPose2D.getY(DistanceUnit.INCH), OpmodeData.initialPose2D.getHeading(AngleUnit.RADIANS)));
-//
-//        //        robot.pinpoint.get().setPosition(OpmodeData.initialPose2D);
-//
-//        robot.drive.setDefaultCommand(robot.drive.drivePollenCommand());
-//
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.B)
-//                .toggleWhenActive(
-//                        robot.drive.setSlowModeCommand(),
-//                        robot.drive.setFastModeCommand()
-//                );
-//
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-//                .toggleWhenActive(
-//                        robot.drive.setTrackingPoseCommand(robot.drive.follower.getPose()),
-//                        robot.drive.clearTrackingPoseCommand()
-//                );
-//
-////        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.Y)
-////                        .whenActive(robot.drive.faceCommand(OpmodeData.initialPose));
-//
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.X)
-//                .whenActive(robot.drive.holdCommand());
-//
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-//                .whenActive(robot.drive.straightenCommand());
-//
-//
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.A)
-//                .whenActive(robot.drive.goToCommand(new Pose(20, 20, 0)));
-//
-//        robot.gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-//                .whileActiveContinuous(robot.drive.limelightAutoAlign());
-//    //                .toggleWhenActive(
-////                        robot.drive.setAlign(),
-////                        robot.drive.setNormal()
-////                );
-//
-//    }
-//}
+package org.firstinspires.ftc.teamcode.opmodes.teleop;
+
+import static com.seattlesolvers.solverslib.gamepad.GamepadExExtKt.toggleWhenActive;
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.seattlesolvers.solverslib.command.Command;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+import com.seattlesolvers.solverslib.photon.PhotonCore;
+
+import org.firstinspires.ftc.teamcode.general.BarnRobot;
+
+import java.util.ArrayList;
+
+public class TeleopTemplate {
+
+    public static ArrayList<String> binds = new ArrayList<>();
+    private static final BarnRobot robot = BarnRobot.getInstance();
+
+    public static void apply(OpMode opMode) {
+        PhotonCore.enable();
+        robot.init(opMode);
+        robot.drive.setDefaultCommand(robot.drive.driveCommand());
+
+        /* Binds: */
+        toggleBind(GamepadKeys.Button.B, "Set Speed: ",  robot.drive.setSlowModeCommand(),  robot.drive.setFastModeCommand());
+
+    }
+
+    public static void toggleBind(GamepadKeys.Button button, String description, Command command1, Command command2) {
+        robot.gamepadEx1.getGamepadButton(button)
+                .toggleWhenPressed(
+                        command1,
+                        command2
+                );
+        binds.add(button.toString() + " " + description);
+    }
+
+    public static void periodic(){
+        binds.forEach(robot.telemetry::addLine);
+        robot.periodic();
+    }
+}
+
+
+
+

@@ -25,9 +25,9 @@ public class ConfigTest extends CommandOpMode {
 
     @Override
     public void run() {
-        binds.forEach(robot.telemetry::addLine);
+        TeleopTemplate.periodic();
         super.run();
-        robot.periodic();
+
     }
 
     //TODO: implement in template
