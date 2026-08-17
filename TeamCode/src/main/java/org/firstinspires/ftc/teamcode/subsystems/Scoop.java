@@ -1,21 +1,20 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.seattlesolvers.solverslib.command.Command;
 import com.seattlesolvers.solverslib.command.InstantCommand;
-import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
-import com.seattlesolvers.solverslib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 
+@Configurable
 public class Scoop extends SubsystemBase {
     private final Servo rightScoopServo;
     private final Servo leftScoopServo;
 
-    // Constants should be static final and typically uppercase
-    private static final double SCOOP_COLLECT = 0.05;
-    private static final double SCOOP_DUMP = 0.6;
+    public static double SCOOP_COLLECT = 0;
+    public static double SCOOP_DUMP = 1;
 
     public Scoop() {
         leftScoopServo = BarnRobot.getInstance().hardware.leftScoopServo;
@@ -40,4 +39,11 @@ public class Scoop extends SubsystemBase {
         return new InstantCommand(() -> setPosition(SCOOP_DUMP), this);
     }
 
+    public double getRightPos() {
+        return rightScoopServo.getPosition();
+    }
+
+    public double getLeftPos() {
+        return leftScoopServo.getPosition();
+    }
 }
