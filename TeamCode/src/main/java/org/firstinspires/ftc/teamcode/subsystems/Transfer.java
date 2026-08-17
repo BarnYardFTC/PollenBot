@@ -16,7 +16,7 @@ public class Transfer extends SubsystemBase {
         transferMotor = BarnRobot.getInstance().hardware.transfer;
         transferMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         transferMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        transferMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        transferMotor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public Command enableCommand(){

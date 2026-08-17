@@ -26,8 +26,8 @@ public class ConfigTest extends CommandOpMode {
     @Override
     public void run() {
         TeleopTemplate.periodic();
+        robot.telemetry.addLine("right scoop servo: " +  robot.scoop.getRightPos() + " left scoop servo: " + robot.scoop.getLeftPos());
         super.run();
-
     }
 
     //TODO: implement in template
@@ -37,6 +37,6 @@ public class ConfigTest extends CommandOpMode {
                         command1,
                         command2
                 );
-        binds.add(button.toString() + " " + description);
+        binds.add(button.toString() + ": " + description);
     }
 }
