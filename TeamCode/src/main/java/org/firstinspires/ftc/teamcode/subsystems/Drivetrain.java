@@ -70,10 +70,10 @@ public class Drivetrain extends SubsystemBase {
         double rf =  gamepadEx.getLeftY() - gamepadEx.getLeftX() - gamepadEx.getRightX();
         double lb =  gamepadEx.getLeftY() - gamepadEx.getLeftX() + gamepadEx.getRightX();
         double rb =  gamepadEx.getLeftY() + gamepadEx.getLeftX() - gamepadEx.getRightX();
-        leftFront.setPower(lf);
-        rightFront.setPower(rf);
-        leftBack.setPower(lb);
-        rightBack.setPower(rb);
+        leftFront.setPower(lf * speedModifier);
+        rightFront.setPower(rf * speedModifier);
+        leftBack.setPower(lb * speedModifier);
+        rightBack.setPower(rb * speedModifier);
     }
 
     public RunCommand driveCommand() {
@@ -204,13 +204,13 @@ public class Drivetrain extends SubsystemBase {
 //        return new InstantCommand(() -> turnPower = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7);
 //    }
 //
-//    public Command setSlowModeCommand() {
-//        return new InstantCommand(() -> speedModifier = SLOW_SPEED, this);
-//    }
+    public Command setSlowModeCommand() {
+        return new InstantCommand(() -> speedModifier = SLOW_SPEED, this);
+    }
 //
-//    public Command setFastModeCommand() {
-//        return new InstantCommand(() -> speedModifier = FAST_SPEED, this);
-//    }
+    public Command setFastModeCommand() {
+        return new InstantCommand(() -> speedModifier = FAST_SPEED, this);
+    }
 //
 //    public Command goToCommand(Pose pose) {
 //        return new FollowPathCommand(
