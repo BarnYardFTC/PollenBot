@@ -18,25 +18,17 @@ public class ConfigTest extends CommandOpMode {
     @Override
     public void initialize() {
         robot.init(this);
-        bind(GamepadKeys.Button.Y, "Scoop", robot.scoop.collectCommand(), robot.scoop.dumpCommand());
-        bind(GamepadKeys.Button.X, "Transfer", robot.transfer.enableCommand(), robot.transfer.disableCommand());
-        bind(GamepadKeys.Button.B, "Intake", robot.intake.enableCommand(), robot.intake.disableCommand());
+        robot.drive.setDefaultCommand(robot.drive.driveCommand());
+        TeleopTemplate.toggleBind(GamepadKeys.Button.Y, "Scoop", robot.scoop.collectCommand(), robot.scoop.dumpCommand());
+        TeleopTemplate.toggleBind(GamepadKeys.Button.X, "Transfer", robot.transfer.enableCommand(), robot.transfer.disableCommand());
+        TeleopTemplate.toggleBind(GamepadKeys.Button.B, "Intake", robot.intake.enableCommand(), robot.intake.disableCommand());
     }
 
     @Override
     public void run() {
-        TeleopTemplate.periodic();
+        binds.forEach(robot.telemetry::addLine);
+        robot.periodic();
         robot.telemetry.addLine("right scoop servo: " +  robot.scoop.getRightPos() + " left scoop servo: " + robot.scoop.getLeftPos());
         super.run();
-    }
-
-    //TODO: implement in template
-    private void bind(GamepadKeys.Button button, String description, Command command1, Command command2) {
-        robot.gamepadEx1.getGamepadButton(button)
-                .toggleWhenPressed(
-                        command1,
-                        command2
-                );
-        binds.add(button.toString() + ": " + description);
     }
 }

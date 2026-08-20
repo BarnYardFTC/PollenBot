@@ -13,7 +13,7 @@ public class Scoop extends SubsystemBase {
     private final Servo rightScoopServo;
     private final Servo leftScoopServo;
 
-    public static double SCOOP_COLLECT = 0;
+    public static double SCOOP_COLLECT = 0.05;
     public static double SCOOP_DUMP = 1;
 
     public Scoop() {
