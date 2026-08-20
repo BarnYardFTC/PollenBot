@@ -18,18 +18,7 @@ public class
 Constants {
 
     public static FollowerConstants followerConstants = new FollowerConstants()
-            .mass(14.07)
-            .forwardZeroPowerAcceleration(-25.76395763804099)
-            .lateralZeroPowerAcceleration(-87.59485280046445)
-            .useSecondaryTranslationalPIDF(true)
-            .useSecondaryHeadingPIDF(true)
-            .useSecondaryDrivePIDF(true)
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.3, 0, 0.02, 0.04))
-            .secondaryTranslationalPIDFCoefficients(new PIDFCoefficients(0.3, 0.01, 0.01, 0.015))
-            .headingPIDFCoefficients(new PIDFCoefficients(0.15, 0, 0.015, 0.5))
-            .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(5, 0, 0.05, 0.01))
-            .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.035, 0, 0.00008, 0.008, 0.6))
-            .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.02, 0, 0.000005, 0.01, 0.6));
+            .mass(14.07);
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
     public static Follower createFollower(HardwareMap hardwareMap) {
@@ -49,13 +38,11 @@ Constants {
             .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
-            .xVelocity(73.24950450987328)
-            .yVelocity(53.103720837690695);
+            .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-47/25.4)
-            .strafePodX(-70/25.4)
+            .forwardPodY(2/2.54)
+            .strafePodX(-1/2.54)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
