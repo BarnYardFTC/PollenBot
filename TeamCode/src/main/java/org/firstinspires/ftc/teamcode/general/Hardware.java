@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Hardware {
 
+    private static final String TRANSFER_TOP_CONFIG_NAME = "transferTopMotor";
+    private static final String TRANSFER_BOTTOM_CONFIG_NAME = "transferBottomMotor";
     private HardwareMap hwMap = hardwareMap;
 
     public static final String LEFT_FRONT_DRIVETRAIN_CONFIG_NAME = "leftFrontDrivetrain";
@@ -21,7 +23,6 @@ public class Hardware {
     public static final String LIMELIGHT_CONFIG_NAME = "limelight";
 
     public static final String INTAKE_CONFIG_NAME = "intakeMotor";
-    public static final String TRANSFER_CONFIG_NAME = "transferMotor";
 
 
     public static final String LEFT_SCOOP_CONFIG_NAME = "leftScoopServo";
@@ -37,8 +38,9 @@ public class Hardware {
     public DcMotor rightBackDrivetrain;
 
     public DcMotor intake;
-    public DcMotor transfer;
 
+    public DcMotor transferTopMotor;
+    public DcMotor transferBottomMotor;
     public Servo leftScoopServo;
     public Servo rightScoopServo;
 
@@ -56,7 +58,8 @@ public class Hardware {
         rightBackDrivetrain = hwMap.get(DcMotor.class, RIGHT_BACK_DRIVETRAIN_CONFIG_NAME);
 
         intake = hwMap.get(DcMotor.class, INTAKE_CONFIG_NAME);
-        transfer = hwMap.get(DcMotor.class, TRANSFER_CONFIG_NAME);
+        transferTopMotor = hwMap.get(DcMotor.class, TRANSFER_TOP_CONFIG_NAME);
+        transferBottomMotor = hwMap.get(DcMotor.class, TRANSFER_BOTTOM_CONFIG_NAME);
     }
 
     public void initServos() {
