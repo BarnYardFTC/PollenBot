@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {
     private final DcMotor leftBack;
     private final DcMotor rightBack;
 
-//    public Follower follower;
+    public Follower follower;
 
     private double speedModifier;
     private double turnPower = 0;
@@ -52,7 +52,7 @@ public class Drivetrain extends SubsystemBase {
         initMotor(DcMotorSimple.Direction.FORWARD, rightFront);
         initMotor(DcMotorSimple.Direction.REVERSE, leftBack);
         initMotor(DcMotorSimple.Direction.FORWARD, rightBack);
-//        follower = Constants.createFollower(opMode.hardwareMap);
+        follower = Constants.createFollower(opMode.hardwareMap);
 //        trackingPIDF = new PIDFController(Constants.followerConstants.coefficientsHeadingPIDF);
 //        secondaryTrackingPIDF = new PIDFController(Constants.followerConstants.coefficientsSecondaryHeadingPIDF);
     }
@@ -66,10 +66,10 @@ public class Drivetrain extends SubsystemBase {
 
     private void drive() {
         GamepadEx gamepadEx = BarnRobot.getInstance().gamepadEx1;
-        double lf =  gamepadEx.getLeftY() - gamepadEx.getLeftX() + gamepadEx.getRightX();
-        double rf =  gamepadEx.getLeftY() + gamepadEx.getLeftX() - gamepadEx.getRightX();
-        double lb =  gamepadEx.getLeftY() + gamepadEx.getLeftX() + gamepadEx.getRightX();
-        double rb =  gamepadEx.getLeftY() - gamepadEx.getLeftX() - gamepadEx.getRightX();
+        double lf = gamepadEx.getLeftY() - gamepadEx.getLeftX() + gamepadEx.getRightX();
+        double rf = gamepadEx.getLeftY() + gamepadEx.getLeftX() - gamepadEx.getRightX();
+        double lb = gamepadEx.getLeftY() + gamepadEx.getLeftX() + gamepadEx.getRightX();
+        double rb = gamepadEx.getLeftY() - gamepadEx.getLeftX() - gamepadEx.getRightX();
         leftFront.setPower(lf * speedModifier);
         rightFront.setPower(rf * speedModifier);
         leftBack.setPower(lb * speedModifier);
@@ -128,22 +128,28 @@ public class Drivetrain extends SubsystemBase {
 //            BarnRobot.getInstance().telemetry.addData("failed to set teleop", e);
 //        }
 //    }
-//
-//    private void drivePollen() {
-//        double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
-//        double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
-//        double turn = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7;
-//
-//        if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
-//            follower.startTeleopDrive(true);
-//        }
-//        try {
-//            follower.setTeleOpDrive(x, y, turn, false);
-//        } catch (Exception e) {
-//            BarnRobot.getInstance().telemetry.addData("failed to set teleop", e);
-//        }
-//    }
-//
+
+    private void drivePollen() {
+        double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
+        double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
+        double turn = -BarnRobot.getInstance().gamepadEx1.getRightX() * speedModifier * 0.7;
+
+        if (!follower.getTeleopDrive() && BarnRobot.getInstance().sticksUsed()) {
+            follower.startTeleopDrive(true);
+        }
+        try {
+            follower.setTeleOpDrive(x, y, turn, false);
+        } catch (Exception e) {
+            BarnRobot.getInstance().telemetry.addData("failed to set teleop", e);
+        }
+    }
+
+    public void displayPositionTelemetry() {
+        BarnRobot.getInstance().telemetry.addData("pos x: ", follower.getPose().getX());
+        BarnRobot.getInstance().telemetry.addData("pos y: ", follower.getPose().getY());
+        BarnRobot.getInstance().telemetry.addData("turn: ", Math.toDegrees(follower.getPose().getHeading()));
+    }
+
 //    private void driveAutoAlignment() {
 //        double x = BarnRobot.getInstance().gamepadEx1.getLeftY() * speedModifier;
 //        double y = -BarnRobot.getInstance().gamepadEx1.getLeftX() * speedModifier;
@@ -176,9 +182,9 @@ public class Drivetrain extends SubsystemBase {
 //        return new RunCommand(this::driveFollower, this);
 //    }
 //
-//    public RunCommand drivePollenCommand() {
-//        return new RunCommand(this::drivePollen, this);
-//    }
+    public RunCommand drivePollenCommand() {
+        return new RunCommand(this::drivePollen, this);
+    }
 //
 //    public RunCommand driveAutoAlignCommand() {
 //        return new RunCommand(this::driveAutoAlignment, this);
@@ -216,15 +222,15 @@ public class Drivetrain extends SubsystemBase {
         return new InstantCommand(() -> speedModifier = FAST_SPEED, this);
     }
 //
-//    public Command goToCommand(Pose pose) {
-//        return new FollowPathCommand(
-//                follower,
-//                follower.pathBuilder()
-//                        .addPath(new BezierLine(follower.getPose(), pose))
-//                        .setLinearHeadingInterpolation(follower.getHeading(), pose.getHeading())
-//                        .build()
-//        );
-//    }
+    public Command goToCommand(Pose pose) {
+        return new FollowPathCommand(
+                follower,
+                follower.pathBuilder()
+                        .addPath(new BezierLine(follower.getPose(), pose))
+                        .setLinearHeadingInterpolation(follower.getHeading(), pose.getHeading())
+                        .build()
+        );
+    }
 //
 //    public Command holdCommand() {
 //        return new InstantCommand(() -> follower.holdPoint(follower.getPose()), this);
