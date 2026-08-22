@@ -2,10 +2,8 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import static com.seattlesolvers.solverslib.gamepad.GamepadExExtKt.toggleWhenActive;
 
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.seattlesolvers.solverslib.command.Command;
-import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.command.ParallelCommandGroup;
 import com.seattlesolvers.solverslib.command.RunCommand;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
@@ -25,12 +23,12 @@ public class TeleopTemplate {
     public static void apply(OpMode opMode) {
         PhotonCore.enable();
         robot.init(opMode);
-        robot.drive.setDefaultCommand(robot.drive.drivePollenCommand());
+        //TODO: set to dedicated follower drive once ready
+        robot.drive.setDefaultCommand(robot.drive.driveCommand());
 
         // Binds
         toggleBind(GamepadKeys.Button.B, "Change speed", robot.drive.setSlowModeCommand(),  robot.drive.setFastModeCommand());
-        toggleBind(GamepadKeys.Button.Y, "Scoop", robot.scoop.dumpCommand(),  robot.scoop.collectCommand());
-        toggleBind(GamepadKeys.Button.X, "Go to scoring pose", robot.drive.goToCommand(new Pose(72, 12, 90)), robot.drive.goToCommand(new Pose(72, 12, 90)));
+        toggleBind(GamepadKeys.Button.Y, "Scoop", robot.scoop.collectCommand(), robot.scoop.dumpCommand());
         triggerBind(GamepadKeys.Trigger.RIGHT_TRIGGER, "Intake, transfer", new SequentialCommandGroup(robot.intake.enableCommand(), robot.transfer.enableCommand()), new ParallelCommandGroup(robot.intake.disableCommand(), robot.transfer.disableCommand()));
     }
 

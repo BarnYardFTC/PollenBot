@@ -49,17 +49,16 @@ public class BarnRobot {
     public void init(OpMode opMode){
         hardware = new Hardware(opMode.hardwareMap);
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
-        pinpoint = new Pinpoint();
         drive = new Drivetrain(opMode);
         intake = new Intake();
         transfer = new Transfer();
         scoop = new Scoop();
+        pinpoint = new Pinpoint();
 //        limelight = new Limelight();
         telemetry = opMode.telemetry;
     }
 
     public void periodic() {
         telemetry.update();
-        drive.follower.update();
     }
 }

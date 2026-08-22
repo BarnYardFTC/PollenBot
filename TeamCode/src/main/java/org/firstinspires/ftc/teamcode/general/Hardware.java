@@ -48,7 +48,7 @@ public class Hardware {
         this.hwMap = hwMap;
         initMotors();
         initServos();
-        initSensors();
+//        initSensors();
     }
 
     private void initMotors() {
@@ -69,6 +69,6 @@ public class Hardware {
 
     private void initSensors(){
         pinpoint = hwMap.get(GoBildaPinpointDriver.class, PINPOINT_CONFIG_NAME);
-        //limelight = hwMap.get(Limelight3A.class, LIMELIGHT_CONFIG_NAME);
+        limelight = hwMap.get(Limelight3A.class, LIMELIGHT_CONFIG_NAME);
     }
 }
