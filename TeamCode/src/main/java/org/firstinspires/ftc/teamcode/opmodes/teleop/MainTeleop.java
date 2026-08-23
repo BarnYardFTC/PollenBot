@@ -11,7 +11,6 @@ public class MainTeleop extends CommandOpMode {
     @Override
     public void initialize() {
         TeleopTemplate.apply(this);
-        BarnRobot.getInstance().drive.follower.setStartingPose(new Pose(72, 72, 90));
     }
 
     @Override
