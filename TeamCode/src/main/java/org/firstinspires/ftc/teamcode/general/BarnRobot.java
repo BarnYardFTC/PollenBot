@@ -22,8 +22,6 @@ public class BarnRobot {
     public Drivetrain drive;
 
     public Pinpoint pinpoint;
-//
-//    public Limelight limelight;
 
     public Intake intake;
     public Transfer transfer;
@@ -40,12 +38,6 @@ public class BarnRobot {
         return instance;
     }
 
-    public boolean sticksUsed() {
-        return Math.abs(gamepadEx1.getLeftX()) > 0.05
-                || Math.abs(gamepadEx1.getLeftY()) > 0.05
-                || Math.abs(gamepadEx1.getRightX()) > 0.05;
-    }
-
     public void init(OpMode opMode){
         hardware = new Hardware(opMode.hardwareMap);
         gamepadEx1 = new GamepadEx(opMode.gamepad1);
@@ -54,7 +46,6 @@ public class BarnRobot {
         intake = new Intake();
         transfer = new Transfer();
         scoop = new Scoop();
-//        limelight = new Limelight();
         telemetry = opMode.telemetry;
     }
 

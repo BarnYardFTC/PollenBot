@@ -6,10 +6,8 @@ import com.seattlesolvers.solverslib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.general.BarnRobot;
 
-import java.util.ArrayList;
-
-@TeleOp(name = "Test Teleop", group = "test")
-public class TestTeleop extends CommandOpMode {
+@TeleOp(name = "Main Teleop", group = "main")
+public class MainTeleop extends CommandOpMode {
     @Override
     public void initialize() {
         TeleopTemplate.apply(this);
@@ -20,7 +18,7 @@ public class TestTeleop extends CommandOpMode {
     public void run() {
         super.run();
         TeleopTemplate.periodic();
-        BarnRobot.getInstance().drive.displayPositionTelemetry();
+        BarnRobot.getInstance().telemetry.addData("Field oriented: ", BarnRobot.getInstance().drive.getFieldOriented());
     }
 
     @Override
