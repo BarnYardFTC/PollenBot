@@ -27,7 +27,7 @@ public class Drivetrain extends SubsystemBase {
     private final double SLOW_SPEED = 0.3;
     private final double FAST_SPEED = 1.0;
 
-    private boolean fieldOriented = true;
+    private boolean fieldOriented = false;
 
     public Drivetrain(OpMode opMode) {
         speedModifier = FAST_SPEED;
@@ -51,10 +51,10 @@ public class Drivetrain extends SubsystemBase {
 
     private void drive() {
         GamepadEx gamepadEx = BarnRobot.getInstance().gamepadEx1;
-        double lf = gamepadEx.getLeftY() - gamepadEx.getLeftX() + gamepadEx.getRightX();
-        double rf = gamepadEx.getLeftY() + gamepadEx.getLeftX() - gamepadEx.getRightX();
-        double lb = gamepadEx.getLeftY() + gamepadEx.getLeftX() + gamepadEx.getRightX();
-        double rb = gamepadEx.getLeftY() - gamepadEx.getLeftX() - gamepadEx.getRightX();
+        double lf = gamepadEx.getLeftY() + gamepadEx.getLeftX() + gamepadEx.getRightX();
+        double rf = gamepadEx.getLeftY() - gamepadEx.getLeftX() - gamepadEx.getRightX();
+        double lb = gamepadEx.getLeftY() - gamepadEx.getLeftX() + gamepadEx.getRightX();
+        double rb = gamepadEx.getLeftY() + gamepadEx.getLeftX() - gamepadEx.getRightX();
         leftFront.setPower(lf * speedModifier);
         rightFront.setPower(rf * speedModifier);
         leftBack.setPower(lb * speedModifier);
@@ -81,6 +81,7 @@ public class Drivetrain extends SubsystemBase {
             drivePollen();
         }
         else {
+            BarnRobot.getInstance().hardware.setBrake();
             drive();
         }
     }
