@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.general;
 
 import com.pedropathing.control.FilteredPIDFCoefficients;
 import com.pedropathing.control.PIDFCoefficients;
+import com.pedropathing.control.PredictiveBrakingCoefficients;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.ftc.FollowerBuilder;
@@ -18,7 +19,10 @@ public class
 Constants {
 
     public static FollowerConstants followerConstants = new FollowerConstants()
-            .mass(14.07)
+            .mass(9) //Pollen bot mass
+
+            //old data
+
             .forwardZeroPowerAcceleration(-25.76395763804099)
             .lateralZeroPowerAcceleration(-87.59485280046445)
             .useSecondaryTranslationalPIDF(true)
@@ -29,7 +33,9 @@ Constants {
             .headingPIDFCoefficients(new PIDFCoefficients(0.15, 0, 0.015, 0.5))
             .secondaryHeadingPIDFCoefficients(new PIDFCoefficients(5, 0, 0.05, 0.01))
             .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.035, 0, 0.00008, 0.008, 0.6))
-            .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.02, 0, 0.000005, 0.01, 0.6));
+            .secondaryDrivePIDFCoefficients(new FilteredPIDFCoefficients(0.02, 0, 0.000005, 0.01, 0.6))
+            .predictiveBrakingCoefficients(new PredictiveBrakingCoefficients(0.3, 0.057999299877891146, 0.0025011065684205627));
+
     public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
     public static Follower createFollower(HardwareMap hardwareMap) {
@@ -50,15 +56,18 @@ Constants {
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
             .rightFrontMotorDirection(DcMotorSimple.Direction.FORWARD)
             .rightRearMotorDirection(DcMotorSimple.Direction.FORWARD)
+
+            //old data
+
             .xVelocity(73.24950450987328)
             .yVelocity(53.103720837690695);
 
     public static PinpointConstants localizerConstants = new PinpointConstants()
-            .forwardPodY(-47/25.4)
-            .strafePodX(-70/25.4)
+            .forwardPodY(-18.5/2.54)
+            .strafePodX(3/2.54)
             .distanceUnit(DistanceUnit.INCH)
             .hardwareMapName("pinpoint")
             .encoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD)
             .forwardEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD)
-            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.FORWARD);
+            .strafeEncoderDirection(GoBildaPinpointDriver.EncoderDirection.REVERSED);
 }
