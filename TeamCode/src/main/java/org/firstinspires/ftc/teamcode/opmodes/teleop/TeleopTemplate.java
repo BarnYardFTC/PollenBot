@@ -22,13 +22,10 @@ public class TeleopTemplate {
     public static void apply(OpMode opMode) {
         PhotonCore.enable();
         robot.init(opMode);
-        robot.drive.setDefaultCommand(robot.drive.hybridDriveCommand());
 
         // Binds
         toggleBind(GamepadKeys.Button.B, "Change speed", robot.drive.setSlowModeCommand(),  robot.drive.setFastModeCommand());
-        toggleBind(GamepadKeys.Button.Y, "Scoop", robot.scoop.dumpCommand(),  robot.scoop.collectCommand());
         toggleBind(GamepadKeys.Button.X, "Intake, transfer", new SequentialCommandGroup(robot.intake.enableCommand(), robot.transfer.enableCommand()), new SequentialCommandGroup(robot.intake.disableCommand(), robot.transfer.disableCommand()));
-        toggleBind(GamepadKeys.Button.DPAD_UP, "Change drivetrain type", robot.drive.changeFieldOrientedCommand(), robot.drive.changeFieldOrientedCommand());
     }
 
     public static void toggleBind(GamepadKeys.Button button, String description, Command command1, Command command2) {
