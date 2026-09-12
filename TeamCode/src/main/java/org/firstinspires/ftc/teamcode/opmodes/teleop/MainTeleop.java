@@ -17,7 +17,6 @@ public class MainTeleop extends CommandOpMode {
     public void run() {
         super.run();
         TeleopTemplate.periodic();
-        BarnRobot.getInstance().telemetry.addData("Field oriented: ", BarnRobot.getInstance().drive.getFieldOriented());
     }
 
     @Override
